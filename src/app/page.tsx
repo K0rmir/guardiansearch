@@ -1,6 +1,9 @@
+import apiCallSearch from "@/lib/apiCall"
+
+
 export default function App() {
 
-
+apiCallSearch()
 
 
 
