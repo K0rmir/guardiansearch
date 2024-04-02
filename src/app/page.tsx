@@ -1,15 +1,14 @@
-import apiCallSearch from "@/lib/apiCall"
-
+import Home from "@/components/Home"
 
 export default function App() {
 
-apiCallSearch()
-
-
-
   return (
 
-  <p>Hello</p>
+    <div>
+      <Home></Home>
+    </div>
+
+ 
 
   )
  
