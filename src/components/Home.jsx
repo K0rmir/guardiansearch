@@ -1,5 +1,6 @@
 import {InputText} from "primereact/inputtext";
 import apiCallSearch from "@/lib/apiCall";
+import Footer from "@/components/Footer.jsx";
 import "../styles/Home.css";
 import "primeicons/primeicons.css";
 
@@ -32,6 +33,7 @@ export default function Home() {
           </form>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
