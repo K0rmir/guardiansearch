@@ -1,17 +1,18 @@
 "use client";
 
-import {createContext, useState, useContext, useEffect} from "react";
+import {createContext, useState, useContext} from "react";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
-const api_key = process.env.GU_API_KEY;
 
 const ApiContext = createContext();
 
 export default function ApiProvider({children}) {
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
+
   const [articles, setArticles] = useState([]);
 
-  // Content API endpoint - This search is generic & returns all pieces of content in API with that keyword. //
+  // Content API endpoint - This search is generic & returns pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
     console.log("this is the api key", api_key);
     const data = await fetch(
