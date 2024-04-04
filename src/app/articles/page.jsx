@@ -2,6 +2,7 @@
 
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
+import Link from "next/link";
 
 export default function Articles() {
   const {articles, apiCallSearch} = useApiContext();
@@ -19,12 +20,25 @@ export default function Articles() {
     <div>
       <a href="/">
         <p>Guardian Search</p>
+        {/* <p>{console.log(articles[0].webTitle)}</p> */}
       </a>
-      <p>Hello from the articles page</p>
-      <p>
-        Articles = {articles.length} using search query: {searchQuery}
-      </p>
-      <p>{console.log(articles)}</p>
+      <div className="articlesContainer">
+        {articles.map((article) => {
+          return (
+            <div className="articleCard" key={article.id}>
+              <Link href={`${article.webUrl}`}>
+                <p>{article.webTitle}</p>
+              </Link>
+
+              <p>{article.sectionName}</p>
+              <p>
+                Published:{" "}
+                {new Date(article.webPublicationDate).toLocaleDateString()}
+              </p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
