@@ -1,19 +1,23 @@
 import {InputText} from "primereact/inputtext";
-import apiCallSearch from "@/lib/apiCall";
+import apiCallSearch from "@/context/ApiContext";
 import Footer from "@/components/Footer.jsx";
 import "../styles/Home.css";
 import "primeicons/primeicons.css";
+import {redirect} from "next/navigation";
 
 export default function Home() {
   async function handleApiCallSearch(formData) {
     "use server";
     const searchQuery = formData.get("searchQuery");
-    apiCallSearch(searchQuery);
+    // apiCallSearch(searchQuery);
+    redirect("/articles");
   }
 
   return (
     <div>
-      <p>Guardian Search</p>
+      <a href="/">
+        <p>Guardian Search</p>
+      </a>
 
       <div className="formContainer">
         <div className="searchForm">
