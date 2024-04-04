@@ -35,7 +35,8 @@
     ".next/types/**/*.ts",
     "src/components/Home.jsx",
     "src/app/layout.jsx",
-    "src/context/ApiContext.jsx"
+    "src/context/ApiContext.jsx",
+    "src/app/page.jsx"
   ],
   "exclude": [
     "node_modules"
