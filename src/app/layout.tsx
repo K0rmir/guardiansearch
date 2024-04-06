@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api'; 
 import ApiProvider from "@/context/ApiContext"
+import Footer from "@/components/Footer.jsx";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
      <ApiProvider>
         <PrimeReactProvider >   
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>{children}<Footer/></body>
         </PrimeReactProvider>
       </ApiProvider>
     </html>

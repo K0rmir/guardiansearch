@@ -29,12 +29,16 @@ export default function Articles() {
               <Link href={`${article.webUrl}`}>
                 <p>{article.webTitle}</p>
               </Link>
-
               <p>{article.sectionName}</p>
               <p>
                 Published:{" "}
                 {new Date(article.webPublicationDate).toLocaleDateString()}
               </p>
+              <img
+                className="articleImg"
+                src={article.elements[0].assets[0].file}
+                alt={article.elements[0].assets[0].typeData.altText}
+              />
             </div>
           );
         })}
