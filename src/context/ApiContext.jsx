@@ -8,7 +8,7 @@ import {createContext, useState, useContext} from "react";
 const ApiContext = createContext();
 
 export default function ApiProvider({children}) {
-  const api_key = process.env.NEXT_PUBLIC_API_KEY;
+  const api_key = process.env.API_KEY;
 
   const [articles, setArticles] = useState([]);
 
