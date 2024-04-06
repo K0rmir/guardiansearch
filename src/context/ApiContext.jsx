@@ -1,6 +1,7 @@
 "use client";
 
 import {createContext, useState, useContext} from "react";
+import {unstable_noStore as noStore} from "next/cache";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -8,7 +9,8 @@ import {createContext, useState, useContext} from "react";
 const ApiContext = createContext();
 
 export default function ApiProvider({children}) {
-  const api_key = process.env.API_KEY;
+  noStore();
+  const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
   const [articles, setArticles] = useState([]);
 
