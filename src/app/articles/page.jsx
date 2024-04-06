@@ -65,6 +65,9 @@ export default function Articles() {
         <Card className="articleTableCard">
           <DataTable
             value={articles}
+            paginator
+            rows={5}
+            rowsPerPageOptions={[5, 10, 20, 30]}
             header={header}
             footer={footer}
             className="articleTable">
