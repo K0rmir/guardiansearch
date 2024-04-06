@@ -11,6 +11,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "guardian-js": "^5.0.0",
+    "html-react-parser": "^5.1.10",
     "next": "14.1.4",
     "primeicons": "^7.0.0",
     "primereact": "^10.6.2",
