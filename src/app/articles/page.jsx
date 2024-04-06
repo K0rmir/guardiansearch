@@ -12,6 +12,7 @@ export default function Articles() {
   const {articles, apiCallSearch} = useApiContext();
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Get & set search query from URL then call API from context on page load or search query change //
   useEffect(() => {
     let params = new URLSearchParams(document.location.search);
     let query = params.get("search");
@@ -20,6 +21,7 @@ export default function Articles() {
   }, [searchQuery]);
 
   // Article Table //
+
   // Table Header //
   const header = (
     <div className="articleTableHeader">
@@ -65,19 +67,32 @@ export default function Articles() {
         <Card className="articleTableCard">
           <DataTable
             value={articles}
+            paginator
+            rows={5}
+            rowsPerPageOptions={[5, 10, 20, 30]}
+            scrollable
+            scrollHeight="750px"
             header={header}
             footer={footer}
             className="articleTable">
-            <Column header="Title" body={titleBodyTemplate}></Column>
-            <Column header="Image" body={imageBodyTemplate}></Column>
+            <Column
+              header="Title"
+              body={titleBodyTemplate}
+              style={{width: "45%"}}></Column>
+            <Column
+              header="Image"
+              body={imageBodyTemplate}
+              style={{width: "15%"}}></Column>
             <Column
               header="Category"
               body={categoryBodyTemplate}
-              className="column"></Column>
+              className="column"
+              style={{width: "15%"}}></Column>
             <Column
               header="Published"
               body={publishedBodyTemplate}
-              className="column"></Column>
+              className="column"
+              style={{width: "15%"}}></Column>
           </DataTable>
         </Card>
       </div>
