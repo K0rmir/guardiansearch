@@ -1,4 +1,41 @@
+.articleTableContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.articleTableCard {
+    width: 75%;
+    border-radius: 10px;
+}
+
+.articleTable {
+    width: 100%;
+}
+
 .articleImg {
     width: 150px;
     height: 100px;
+    border-radius: 10px;
+}
+
+.articleTableHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+
+}
+
+.headerTitle {
+    font-weight: bold;
+    font-size: 1.75rem;
+}
+
+.articleTableTitle {
+    text-decoration: underline;
+    cursor: pointer;
+    color: black;
 }

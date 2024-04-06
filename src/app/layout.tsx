@@ -4,6 +4,8 @@ import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api'; 
 import ApiProvider from "@/context/ApiContext"
 import Footer from "@/components/Footer.jsx";
+// import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
+import 'primereact/resources/themes/lara-light-blue/theme.css'
 
 
 const inter = Inter({ subsets: ["latin"] });
