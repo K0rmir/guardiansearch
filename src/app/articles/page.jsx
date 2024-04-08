@@ -50,11 +50,13 @@ export default function Articles() {
   };
   // Article Image Template //
   const imageBodyTemplate = (articles) => {
-    return (
-      <img
-        src={articles.elements[0].assets[0].file}
-        className="articleImg"></img>
-    );
+    if (articles.elements) {
+      return (
+        <img
+          src={articles.elements[0].assets[0].file}
+          className="articleImg"></img>
+      );
+    } else return <p>No image available.</p>;
   };
   // Article Published Date Template //
   const publishedBodyTemplate = (articles) => {
