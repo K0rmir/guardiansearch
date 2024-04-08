@@ -10,7 +10,7 @@ import "./articles.css";
 import Header from "@/components/Header.jsx";
 
 export default function Articles() {
-  let {
+  const {
     articles,
     apiCallSearch,
     searchQuery,

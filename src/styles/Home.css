@@ -18,6 +18,14 @@
     width: 50%;
 }
 
+.searchForm p {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    margin-top: 10px;
+
+}
+
 
 .searchInput {
     width: 100%;
