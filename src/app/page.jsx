@@ -15,10 +15,6 @@ export default function Home() {
 
   return (
     <div>
-      <a href="/">
-        <p>Guardian Search</p>
-      </a>
-
       <div className="formContainer">
         <div className="searchForm">
           <form action={handleFormSearch}>

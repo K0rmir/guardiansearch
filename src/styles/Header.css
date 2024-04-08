@@ -1,0 +1,48 @@
+.header {
+    background-color: bisque;
+    /* margin: 0;
+    padding: 0; */
+    display: flex;
+    justify-content: center;
+}
+
+.formContainerHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    padding: 10px;
+}
+
+.searchFormHeader {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+.searchInputHeader {
+    width: 100%;
+    height: 35px;
+    border-radius: 20px;
+    border: 1px solid grey;
+    font-size: large;
+}
+
+.searchInput:focus {
+    border: 1px solid lightseagreen;
+    outline: 0;
+}
+
+.searchBtnHeader {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    border: none;
+    height: 15px;
+    cursor: pointer;
+    background-color: transparent;
+}

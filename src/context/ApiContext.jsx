@@ -11,6 +11,8 @@ export default function ApiProvider({children}) {
   const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
   const [articles, setArticles] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [headerSearch, setHeaderSearch] = useState(false);
 
   // Content API endpoint - This search is generic & returns pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
@@ -24,7 +26,15 @@ export default function ApiProvider({children}) {
   }
 
   return (
-    <ApiContext.Provider value={{articles, apiCallSearch}}>
+    <ApiContext.Provider
+      value={{
+        articles,
+        apiCallSearch,
+        searchQuery,
+        setSearchQuery,
+        headerSearch,
+        setHeaderSearch,
+      }}>
       {children}
     </ApiContext.Provider>
   );

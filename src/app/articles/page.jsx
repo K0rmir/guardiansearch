@@ -7,18 +7,26 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import "./articles.css";
+import Header from "@/components/Header.jsx";
 
 export default function Articles() {
-  const {articles, apiCallSearch} = useApiContext();
-  const [searchQuery, setSearchQuery] = useState("");
+  let {
+    articles,
+    apiCallSearch,
+    searchQuery,
+    setSearchQuery,
+    headerSearch,
+    setHeaderSearch,
+  } = useApiContext();
 
   // Get & set search query from URL then call API from context on page load or search query change //
   useEffect(() => {
-    let params = new URLSearchParams(document.location.search);
-    let query = params.get("search");
+    const params = new URLSearchParams(document.location.search);
+    const query = params.get("search");
     setSearchQuery(query);
     apiCallSearch(query);
-  }, [searchQuery]);
+    setHeaderSearch(false);
+  }, [searchQuery, headerSearch]);
 
   // Article Table //
 
@@ -59,9 +67,7 @@ export default function Articles() {
 
   return (
     <div>
-      <a href="/">
-        <p>Guardian Search</p>
-      </a>
+      <Header />
 
       <div className="articleTableContainer">
         <Card className="articleTableCard">
