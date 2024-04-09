@@ -1,19 +1,18 @@
 .formContainer {
     position: absolute;
     left: 30%;
-    top: 3%;
+    top: 1%;
     width: 35%;
     height: fit-content;
 }
 
-/* Grid container for the form elements */
 .advSearchFormGrid {
     display: grid;
     grid-template-rows: repeat(2, 1fr) 1fr;
     grid-template-columns: repeat(2, 35%);
     justify-content: center;
     gap: 15px;
-    margin-top: 5%;
+    margin-top: 5px;
 }
 
 .inputSwitch {
@@ -21,13 +20,7 @@
     justify-self: center;
 }
 
-/* Form inputs for search terms */
-.searchInput {}
 
-/* Input for the search date */
-.searchDate {}
-
-/* Search button */
 .searchBtn {
     grid-column: 1 / span 2;
 
@@ -36,5 +29,47 @@
     justify-self: center;
     display: flex;
     justify-content: center;
+}
 
+.articleTableContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12%;
+}
+
+.articleTableCard {
+    width: 75%;
+    border-radius: 10px;
+}
+
+.articleTable {
+    width: 100%;
+}
+
+.articleImg {
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.articleTableHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+
+}
+
+.headerTitle {
+    font-weight: bold;
+    font-size: 1.75rem;
+}
+
+.articleTableTitle {
+    text-decoration: underline;
+    cursor: pointer;
+    color: black;
 }
