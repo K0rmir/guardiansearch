@@ -14,8 +14,14 @@ import {Column} from "primereact/column";
 
 export default function AdvancedSearch() {
   const router = useRouter();
-  const {apiCallAdvancedSearch, bodySearch, setBodySearch, articles} =
-    useApiContext();
+  const {
+    apiCallAdvancedSearch,
+    bodySearch,
+    setBodySearch,
+    articles,
+    searchQuery,
+    setSearchQuery,
+  } = useApiContext();
 
   // const [checked, setChecked] = useState(false);
 
@@ -26,9 +32,7 @@ export default function AdvancedSearch() {
     router.push(
       `/advancedsearch?search=${formQuery}&date=${formDate}&${formTag}`
     );
-    console.log(formQuery);
-    console.log(formDate);
-    console.log(formTag);
+    setSearchQuery(formQuery);
     apiCallAdvancedSearch(formQuery, formDate, formTag);
   }
 
@@ -37,7 +41,7 @@ export default function AdvancedSearch() {
   // Table Header //
   const header = (
     <div className="articleTableHeader">
-      <span className="headerTitle">Search results for: </span>
+      <span className="headerTitle">Search results for: {searchQuery}</span>
     </div>
   );
   // Table Footer //
@@ -86,9 +90,7 @@ export default function AdvancedSearch() {
             <InputSwitch
               className="inputSwitch"
               checked={bodySearch}
-              onChange={
-                (console.log(bodySearch), (e) => setBodySearch(e.value))
-              }
+              onChange={(e) => setBodySearch(e.value)}
             />
 
             <InputNumber
