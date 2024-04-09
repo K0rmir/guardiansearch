@@ -16,8 +16,6 @@ export default function ApiProvider({children}) {
   const [headerSearch, setHeaderSearch] = useState(false);
   const [bodySearch, setBodySearch] = useState(false);
 
-  let queryFields = "webTitle,thumbnail";
-
   // Content API endpoint - This search is generic & returns pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
     const data = await fetch(
@@ -31,8 +29,11 @@ export default function ApiProvider({children}) {
 
   // Advanced Search //
   async function apiCallAdvancedSearch(query, date, tag) {
+    let queryFields;
     if (bodySearch) {
       queryFields = "webTitle,body";
+    } else {
+      queryFields = "webTitle,thumbnail";
     }
     const data = await fetch(
       `https://content.guardianapis.com/search?q="${query}"&from-date=${date}&tag=${tag}/${tag}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&query-fields=${queryFields}&api-key=${api_key}`

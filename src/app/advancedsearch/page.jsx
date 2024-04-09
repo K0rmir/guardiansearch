@@ -4,9 +4,10 @@ import "./advancedsearch.css";
 import {InputText} from "primereact/inputtext";
 import {InputNumber} from "primereact/inputnumber";
 import {InputSwitch} from "primereact/inputswitch";
+import {Card} from "primereact/card";
+import {Button} from "primereact/button";
 import {useApiContext} from "@/context/ApiContext";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -37,9 +38,9 @@ export default function AdvancedSearch() {
 
   return (
     <div>
-      <div className="advSearchFormContainer">
-        <div className="advSearchForm">
-          <form action={handleAdvancedSearch}>
+      <Card className="formContainer">
+        <form action={handleAdvancedSearch}>
+          <div className="advSearchFormGrid">
             <InputText
               className="searchInput"
               type="text"
@@ -47,6 +48,14 @@ export default function AdvancedSearch() {
               id="searchQuery"
               placeholder="Keyword, term or phrase"
             />
+            <InputSwitch
+              className="inputSwitch"
+              checked={bodySearch}
+              onChange={
+                (console.log(bodySearch), (e) => setBodySearch(e.value))
+              }
+            />
+
             <InputNumber
               className="searchDate"
               name="searchDate"
@@ -55,22 +64,18 @@ export default function AdvancedSearch() {
               useGrouping={false}
             />
             <InputText
-              className="searchInput"
+              className="searchTag"
               type="text"
               name="searchTag"
               id="searchTag"
               placeholder="Tag"
             />
-            <InputSwitch
-              checked={bodySearch}
-              onChange={
-                (console.log(bodySearch), (e) => setBodySearch(e.value))
-              }
-            />
-            <button type="submit">Search</button>
-          </form>
-        </div>
-      </div>
+            <Button type="submit" className="searchBtn">
+              Search
+            </Button>
+          </div>
+        </form>
+      </Card>
     </div>
   );
 }

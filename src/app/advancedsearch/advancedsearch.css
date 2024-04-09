@@ -1,0 +1,40 @@
+.formContainer {
+    position: absolute;
+    left: 30%;
+    top: 3%;
+    width: 35%;
+    height: fit-content;
+}
+
+/* Grid container for the form elements */
+.advSearchFormGrid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr) 1fr;
+    grid-template-columns: repeat(2, 35%);
+    justify-content: center;
+    gap: 15px;
+    margin-top: 5%;
+}
+
+.inputSwitch {
+    align-self: center;
+    justify-self: center;
+}
+
+/* Form inputs for search terms */
+.searchInput {}
+
+/* Input for the search date */
+.searchDate {}
+
+/* Search button */
+.searchBtn {
+    grid-column: 1 / span 2;
+
+    padding: 10px;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+
+}
