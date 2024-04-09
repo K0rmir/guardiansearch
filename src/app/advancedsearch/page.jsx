@@ -3,6 +3,9 @@
 import "./advancedsearch.css";
 import {InputText} from "primereact/inputtext";
 import {InputNumber} from "primereact/inputnumber";
+import {InputSwitch} from "primereact/inputswitch";
+import {Card} from "primereact/card";
+import {Button} from "primereact/button";
 import {useApiContext} from "@/context/ApiContext";
 import {useRouter} from "next/navigation";
 
@@ -14,23 +17,30 @@ export default function AdvancedSearch() {
     searchDate,
     setSearchDate,
     apiCallAdvancedSearch,
+    bodySearch,
+    setBodySearch,
   } = useApiContext();
 
-  async function handleAdvancedSearch(formData) {
+  // const [checked, setChecked] = useState(false);
+
+  function handleAdvancedSearch(formData) {
     const formQuery = formData.get("searchQuery");
     const formDate = formData.get("searchDate");
-    router.push(`/advancedsearch?search=${formQuery}&date=${formDate}`);
-    setSearchQuery(formQuery);
-    setSearchDate(formDate);
-    console.log(searchQuery);
-    console.log(searchDate);
-    apiCallAdvancedSearch(searchQuery, searchDate);
+    const formTag = formData.get("searchTag");
+    router.push(
+      `/advancedsearch?search=${formQuery}&date=${formDate}&${formTag}`
+    );
+    console.log(formQuery);
+    console.log(formDate);
+    console.log(formTag);
+    apiCallAdvancedSearch(formQuery, formDate, formTag);
   }
+
   return (
     <div>
-      <div className="advSearchFormContainer">
-        <div className="advSearchForm">
-          <form action={handleAdvancedSearch}>
+      <Card className="formContainer">
+        <form action={handleAdvancedSearch}>
+          <div className="advSearchFormGrid">
             <InputText
               className="searchInput"
               type="text"
@@ -38,6 +48,14 @@ export default function AdvancedSearch() {
               id="searchQuery"
               placeholder="Keyword, term or phrase"
             />
+            <InputSwitch
+              className="inputSwitch"
+              checked={bodySearch}
+              onChange={
+                (console.log(bodySearch), (e) => setBodySearch(e.value))
+              }
+            />
+
             <InputNumber
               className="searchDate"
               name="searchDate"
@@ -45,10 +63,19 @@ export default function AdvancedSearch() {
               placeholder="Year"
               useGrouping={false}
             />
-            <button type="submit">Search</button>
-          </form>
-        </div>
-      </div>
+            <InputText
+              className="searchTag"
+              type="text"
+              name="searchTag"
+              id="searchTag"
+              placeholder="Tag"
+            />
+            <Button type="submit" className="searchBtn">
+              Search
+            </Button>
+          </div>
+        </form>
+      </Card>
     </div>
   );
 }
