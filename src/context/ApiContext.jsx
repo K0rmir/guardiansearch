@@ -29,6 +29,7 @@ export default function ApiProvider({children}) {
 
   // Advanced Search //
   async function apiCallAdvancedSearch(query, date, tag) {
+    // Conditional to check if user wants to search body of articles or just headlines //
     let queryFields;
     if (bodySearch) {
       queryFields = "webTitle,body";
