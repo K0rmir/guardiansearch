@@ -15,15 +15,30 @@
     margin-top: 5px;
 }
 
+.inputSwitchContainer {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr, 1fr;
+    height: 50px;
+}
+
+.inputSwitchContainer p {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+}
+
 .inputSwitch {
-    align-self: center;
-    justify-self: center;
+    margin: 0;
+    padding: 0;
 }
 
 
 .searchBtn {
     grid-column: 1 / span 2;
-
     padding: 10px;
     align-self: center;
     justify-self: center;

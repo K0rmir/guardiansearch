@@ -23,8 +23,6 @@ export default function AdvancedSearch() {
     setSearchQuery,
   } = useApiContext();
 
-  // const [checked, setChecked] = useState(false);
-
   function handleAdvancedSearch(formData) {
     const formQuery = formData.get("searchQuery");
     const formDate = formData.get("searchDate");
@@ -87,11 +85,14 @@ export default function AdvancedSearch() {
               id="searchQuery"
               placeholder="Keyword, term or phrase"
             />
-            <InputSwitch
-              className="inputSwitch"
-              checked={bodySearch}
-              onChange={(e) => setBodySearch(e.value)}
-            />
+            <Card className="inputSwitchContainer">
+              <p>Search Article Body:</p>
+              <InputSwitch
+                className="inputSwitch"
+                checked={bodySearch}
+                onChange={(e) => setBodySearch(e.value)}
+              />
+            </Card>
 
             <InputNumber
               className="searchDate"

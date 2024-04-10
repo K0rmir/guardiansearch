@@ -32,12 +32,13 @@ export default function ApiProvider({children}) {
     // Conditional to check if user wants to search body of articles or just headlines //
     let queryFields;
     if (bodySearch) {
-      queryFields = "webTitle,body";
+      queryFields = "headline,body";
     } else {
-      queryFields = "webTitle,thumbnail";
+      queryFields = "headline";
     }
+
     const data = await fetch(
-      `https://content.guardianapis.com/search?q="${query}"&from-date=${date}&tag=${tag}/${tag}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&query-fields=${queryFields}&api-key=${api_key}`
+      `https://content.guardianapis.com/search?q="${query}"&query-fields=${queryFields}&from-date=${date}&section=${tag}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
     );
     const res = await data.json();
     const articleData = res.response.results;
