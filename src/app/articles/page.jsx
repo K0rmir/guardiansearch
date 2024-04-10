@@ -43,7 +43,11 @@ export default function Articles() {
   // Article Title Template //
   const titleBodyTemplate = (articles) => {
     return (
-      <Link href={`${articles.webUrl}`} className="articleTableTitle">
+      <Link
+        href={`${articles.webUrl}`}
+        rel="noopener noreferrer"
+        target="_blank"
+        className="articleTableTitle">
         <p>{articles.webTitle}</p>
       </Link>
     );
