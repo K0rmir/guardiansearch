@@ -25,13 +25,13 @@ export default function AdvancedSearch() {
 
   function handleAdvancedSearch(formData) {
     const formQuery = formData.get("searchQuery");
-    const formDate = formData.get("searchDate");
-    const formTag = formData.get("searchTag");
+    const formDateInput = formData.get("searchDateInput");
+    const formSectionInput = formData.get("searchSectionInput");
     router.push(
-      `/advancedsearch?search=${formQuery}&date=${formDate}&${formTag}`
+      `/advancedsearch?search=${formQuery}&date=${formDateInput}&${formSectionInput}`
     );
     setSearchQuery(formQuery);
-    apiCallAdvancedSearch(formQuery, formDate, formTag);
+    apiCallAdvancedSearch(formQuery, formDateInput, formSectionInput);
   }
 
   // Article Table //
@@ -43,13 +43,15 @@ export default function AdvancedSearch() {
     </div>
   );
   // Table Footer //
-  const footer = `Returned ${
-    articles ? articles.length : 0
-  } articles total by relevance to search query.`;
+  const footer = `Returned ${articles ? articles.length : 0} articles total.`;
   // Article Title Template //
   const titleBodyTemplate = (articles) => {
     return (
-      <Link href={`${articles.webUrl}`} className="articleTableTitle">
+      <Link
+        href={`${articles.webUrl}`}
+        rel="noopener noreferrer"
+        target="_blank"
+        className="articleTableTitle">
         <p>{articles.webTitle}</p>
       </Link>
     );
@@ -86,7 +88,7 @@ export default function AdvancedSearch() {
               placeholder="Keyword, term or phrase"
             />
             <Card className="inputSwitchContainer">
-              <p>Search Article Body:</p>
+              <p>Search Article Content:</p>
               <InputSwitch
                 className="inputSwitch"
                 checked={bodySearch}
@@ -96,17 +98,17 @@ export default function AdvancedSearch() {
 
             <InputNumber
               className="searchDate"
-              name="searchDate"
-              id="searchDate"
+              name="searchDateInput"
+              id="searchDateInput"
               placeholder="Year"
               useGrouping={false}
             />
             <InputText
-              className="searchTag"
+              className="searchSection"
               type="text"
-              name="searchTag"
-              id="searchTag"
-              placeholder="Tag"
+              name="searchSectionInput"
+              id="searchSectionInput"
+              placeholder="Category"
             />
             <Button type="submit" className="searchBtn">
               Search
