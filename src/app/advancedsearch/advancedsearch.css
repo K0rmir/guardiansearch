@@ -46,6 +46,11 @@
     justify-content: center;
 }
 
+.categoryOptions {
+    display: flex;
+    align-items: center;
+}
+
 .articleTableContainer {
     display: flex;
     width: 100%;

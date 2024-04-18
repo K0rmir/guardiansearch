@@ -11,8 +11,12 @@ import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
+import {Dropdown} from "primereact/dropdown";
+import {useState} from "react";
 
 export default function AdvancedSearch() {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const router = useRouter();
   const {
     apiCallAdvancedSearch,
@@ -21,17 +25,19 @@ export default function AdvancedSearch() {
     articles,
     searchQuery,
     setSearchQuery,
+    categoriesArr,
   } = useApiContext();
 
   function handleAdvancedSearch(formData) {
     const formQuery = formData.get("searchQuery");
     const formDateInput = formData.get("searchDateInput");
-    const formSectionInput = formData.get("searchSectionInput");
+    const formSectionInput = selectedCategory;
     router.push(
       `/advancedsearch?search=${formQuery}&date=${formDateInput}&${formSectionInput}`
     );
     setSearchQuery(formQuery);
     apiCallAdvancedSearch(formQuery, formDateInput, formSectionInput);
+    console.log("Hello", formSectionInput);
   }
 
   // Article Table //
@@ -75,13 +81,35 @@ export default function AdvancedSearch() {
     return <p>{articles.sectionName}</p>;
   };
 
+  const selectedCategoryTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div>
+          <div>{option}</div>
+        </div>
+      );
+    }
+    return <span>{props.placeholder}</span>;
+  };
+
+  const categoryOptionTemplate = (option) => {
+    return (
+      <div>
+        <div>{option}</div>
+      </div>
+    );
+  };
+
+  console.log(categoriesArr);
+  console.log(selectedCategory);
+
   return (
     <div>
       <Card className="formContainer">
         <form action={handleAdvancedSearch}>
           <div className="advSearchFormGrid">
             <InputText
-              className="searchInput"
+              className="advSearchInput"
               type="text"
               name="searchQuery"
               id="searchQuery"
@@ -97,19 +125,25 @@ export default function AdvancedSearch() {
             </Card>
 
             <InputNumber
-              className="searchDate"
+              className="advSearchDate"
               name="searchDateInput"
               id="searchDateInput"
               placeholder="Year"
               useGrouping={false}
             />
-            <InputText
-              className="searchSection"
-              type="text"
-              name="searchSectionInput"
-              id="searchSectionInput"
-              placeholder="Category"
+
+            <Dropdown
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.value)}
+              options={categoriesArr}
+              optionLabel="category"
+              placeholder="Select a Category"
+              filter
+              valueTemplate={selectedCategoryTemplate}
+              itemTemplate={categoryOptionTemplate}
+              className="categoryOptions"
             />
+
             <Button type="submit" className="searchBtn">
               Search
             </Button>

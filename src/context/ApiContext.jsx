@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useState, useContext} from "react";
+import {createContext, useState, useContext, useEffect} from "react";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -43,7 +43,7 @@ export default function ApiProvider({children}) {
       queryFields = "headline";
     }
     if (formSectionInput != "") {
-      section = `&section=${formSectionInput}`;
+      section = `&section=${formSectionInput.toLowerCase()}`;
     }
     if (formDateInput != "") {
       date = `&from-date=${formDateInput}`;
@@ -60,6 +60,31 @@ export default function ApiProvider({children}) {
     console.log("This is the advanced article search data", articleData);
   }
 
+  // ------------------------------ //
+
+  const [categoriesArr, setCategoriesArr] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const categories = [];
+      const data = await fetch(
+        "https://content.guardianapis.com/sections?&api-key=9a8955f1-f212-46ab-afbf-9374065b9440"
+      );
+      const res = await data.json();
+      const articleCategories = res.response.results;
+
+      articleCategories.forEach((category) => {
+        const categoryTitle = category.webTitle;
+        if (!categoryTitle.includes("Wellness (Do NOT use)")) {
+          categories.push(categoryTitle);
+        }
+      });
+      setCategoriesArr(categories);
+    };
+
+    getCategories();
+  }, []);
+
   return (
     <ApiContext.Provider
       value={{
@@ -74,6 +99,7 @@ export default function ApiProvider({children}) {
         apiCallAdvancedSearch,
         bodySearch,
         setBodySearch,
+        categoriesArr,
       }}>
       {children}
     </ApiContext.Provider>
