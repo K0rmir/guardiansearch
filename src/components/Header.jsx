@@ -34,7 +34,11 @@ export default function Header() {
       <div className="header">
         <div className="headerLogo">
           <Link href="/">
-            <p>Guardian Search</p>
+            <img
+              src="./searchguardianlogomain.png"
+              alt=""
+              className="headerLogo"
+            />
           </Link>
         </div>
 

@@ -1,3 +1,20 @@
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+
+}
+
+.logo {
+    width: 15%;
+    height: auto;
+}
+
+
+
+
+
 .formContainer {
     position: absolute;
     left: 25%;
@@ -6,6 +23,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 50%;
 }
 

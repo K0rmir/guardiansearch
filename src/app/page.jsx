@@ -16,6 +16,14 @@ export default function Home() {
 
   return (
     <div>
+      <div className="logoContainer">
+        <img
+          src="./searchguardianlogomain.png"
+          className="logo"
+          alt="The Guardian Search Logo"
+        />
+      </div>
+
       <div className="formContainer">
         <div className="searchForm">
           <form action={handleFormSearch}>
@@ -33,7 +41,7 @@ export default function Home() {
             </button>
             <p>
               Want to be more specific? Try
-              <Link href={"/advancedsearch"}>Advanced Search</Link>
+              <Link href={"/advancedsearch"}> Advanced Search</Link>
             </p>
           </form>
         </div>

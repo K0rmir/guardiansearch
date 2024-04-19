@@ -6,6 +6,8 @@
 .headerLogo {
     position: absolute;
     left: 1%;
+    width: 25%;
+    height: auto;
 }
 
 .formContainerHeader {
