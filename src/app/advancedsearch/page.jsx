@@ -37,7 +37,6 @@ export default function AdvancedSearch() {
     );
     setSearchQuery(formQuery);
     apiCallAdvancedSearch(formQuery, formDateInput, formSectionInput);
-    console.log("Hello", formSectionInput);
   }
 
   // Article Table //
@@ -80,7 +79,7 @@ export default function AdvancedSearch() {
   const categoryBodyTemplate = (articles) => {
     return <p>{articles.sectionName}</p>;
   };
-
+  // Category template for options in category dropdown //
   const selectedCategoryTemplate = (option, props) => {
     if (option) {
       return (
@@ -91,7 +90,7 @@ export default function AdvancedSearch() {
     }
     return <span>{props.placeholder}</span>;
   };
-
+  // Category option template for options in category dropdown //
   const categoryOptionTemplate = (option) => {
     return (
       <div>
@@ -99,9 +98,6 @@ export default function AdvancedSearch() {
       </div>
     );
   };
-
-  console.log(categoriesArr);
-  console.log(selectedCategory);
 
   return (
     <div>
@@ -114,6 +110,7 @@ export default function AdvancedSearch() {
               name="searchQuery"
               id="searchQuery"
               placeholder="Keyword, term or phrase"
+              required
             />
             <Card className="inputSwitchContainer">
               <p>Search Article Content:</p>
