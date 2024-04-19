@@ -33,11 +33,11 @@ export default function ApiProvider({children}) {
     formDateInput,
     formSectionInput
   ) {
-    // Conditional to check if user wants to search body of articles or just headlines //
     let queryFields;
     let section = "";
     let date = "";
     if (bodySearch) {
+      // Conditional to check if user wants to search body of articles or just headlines. This is toggled false/true via the input switch in the form which updates the setBodySearch useState. //
       queryFields = "headline,body";
     } else {
       queryFields = "headline";
@@ -49,8 +49,6 @@ export default function ApiProvider({children}) {
       date = `&from-date=${formDateInput}`;
     }
 
-    // &section=${formSection}
-
     const data = await fetch(
       `https://content.guardianapis.com/search?q="${formQuery}"&query-fields=${queryFields}${date}${section}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
     );
@@ -60,7 +58,8 @@ export default function ApiProvider({children}) {
     console.log("This is the advanced article search data", articleData);
   }
 
-  // ------------------------------ //
+  // call sections api endpoint on component mount with useeffect to populate categories input in adv search form //
+  // had to use useffect to allow categories array to be populated for use in adv search form. //
 
   const [categoriesArr, setCategoriesArr] = useState([]);
 
