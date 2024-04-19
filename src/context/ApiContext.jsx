@@ -24,7 +24,7 @@ export default function ApiProvider({children}) {
     const res = await data.json();
     const articleData = res.response.results;
     setArticles(articleData);
-    console.log("this is the article data", articleData);
+    // console.log("this is the article data", articleData);
   }
 
   // Advanced Search //
@@ -55,7 +55,7 @@ export default function ApiProvider({children}) {
     const res = await data.json();
     const articleData = res.response.results;
     setArticles(articleData);
-    console.log("This is the advanced article search data", articleData);
+    // console.log("This is the advanced article search data", articleData);
   }
 
   // call sections api endpoint on component mount with useeffect to populate categories input in adv search form //

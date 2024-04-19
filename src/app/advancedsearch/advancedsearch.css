@@ -1,40 +1,41 @@
 .formContainer {
     position: absolute;
-    left: 30%;
+    left: 23%;
     top: 1%;
-    width: 35%;
-    height: fit-content;
+    width: fit-content;
+    height: fit-content
 }
 
-.advSearchFormGrid {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr) 1fr;
-    grid-template-columns: repeat(2, 35%);
+.advSearchForm {
+    display: flex;
     justify-content: center;
     gap: 15px;
     margin-top: 5px;
 }
 
 .inputSwitchContainer {
-    display: grid;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    grid-template-rows: auto;
-    grid-template-columns: 1fr, 1fr;
-    height: 50px;
+    align-items: center;
+    /* height: 50px; */
+    /* width: fit-content; */
 }
 
-.inputSwitchContainer p {
-    text-align: left;
+/* .inputSwitch {
     margin: 0;
+    padding: 10px;
+} */
+
+.p-card-content {
     padding: 0;
-    width: fit-content;
 }
 
-.inputSwitch {
-    margin: 0;
-    padding: 0;
+.p-card-body {
+    padding: 2%;
 }
+
+
 
 
 .searchBtn {
@@ -56,7 +57,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-top: 12%;
+    margin-top: 7%;
 }
 
 .articleTableCard {

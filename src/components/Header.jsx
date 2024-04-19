@@ -6,11 +6,23 @@ import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
 import "primeicons/primeicons.css";
 import {useApiContext} from "@/context/ApiContext";
+import {useEffect, useState} from "react";
 
 export default function Header() {
   const router = useRouter();
   const {setHeaderSearch} = useApiContext();
 
+  const [advSearchBool, setAdvSearchBool] = useState();
+
+  let params;
+
+  // This useeffect exists to check whether or not user is on advanced search page in order to render(or not) the search bar //
+  useEffect(() => {
+    params = document.location.href;
+    setAdvSearchBool(params.includes("/advancedsearch"));
+  }, []);
+
+  // function to handle a generic search when the search bar is rendered on generic articles page //
   async function handleFormSearch(formData) {
     const searchQuery = formData.get("searchQuery");
     router.push(`/articles?search=${searchQuery}`);
@@ -18,31 +30,39 @@ export default function Header() {
   }
 
   return (
-    <div className="header">
-      <div>
-        <Link href="/">
-          <p>Guardian Search</p>
-        </Link>
-      </div>
-
-      <div className="formContainerHeader">
-        <div className="searchFormHeader">
-          <form action={handleFormSearch}>
-            <InputText
-              className="searchInputHeader"
-              type="text"
-              name="searchQuery"
-              id="searchQuery"
-              placeholder="Search articles..."
-            />
-            <button type="submit" className="searchBtnHeader">
-              <i
-                className="pi pi-search"
-                style={{fontSize: "1.5rem", color: "grey"}}></i>
-            </button>
-          </form>
+    <>
+      <div className="header">
+        <div className="headerLogo">
+          <Link href="/">
+            <p>Guardian Search</p>
+          </Link>
         </div>
+
+        {!advSearchBool && (
+          <div className="formContainerHeader">
+            <div className="searchFormHeader">
+              <form action={handleFormSearch}>
+                <InputText
+                  className="searchInputHeader"
+                  type="text"
+                  name="searchQuery"
+                  id="searchQuery"
+                  placeholder="Search articles..."
+                />
+                <button type="submit" className="searchBtnHeader">
+                  <i
+                    className="pi pi-search"
+                    style={{fontSize: "1.5rem", color: "grey"}}></i>
+                </button>
+                <p>
+                  Want to be more specific? Try
+                  <Link href={"/advancedsearch"}>Advanced Search</Link>
+                </p>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
