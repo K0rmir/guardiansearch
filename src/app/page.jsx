@@ -3,7 +3,6 @@
 import {InputText} from "primereact/inputtext";
 import "primeicons/primeicons.css";
 import {useRouter} from "next/navigation";
-import Link from "next/link";
 import "../styles/Home.css";
 
 export default function Home() {
@@ -40,7 +39,7 @@ export default function Home() {
                 style={{fontSize: "1.5rem", color: "grey"}}></i>
             </button>
             <p>
-              Want to be more specific? Try
+              Want to be more specific? Try &nbsp;
               <a href={"/advancedsearch"}> Advanced Search</a>
             </p>
           </form>

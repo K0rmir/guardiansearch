@@ -11,7 +11,7 @@ import Link from "next/link";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import Header from "@/components/Header.jsx";
 import "./advancedsearch.css";
 

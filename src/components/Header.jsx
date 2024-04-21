@@ -1,10 +1,9 @@
 "use client";
 
 import "@/styles/Header.css";
-import Link from "next/link";
+import "primeicons/primeicons.css";
 import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
-import "primeicons/primeicons.css";
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
 
@@ -62,7 +61,7 @@ export default function Header() {
                     style={{fontSize: "1.5rem", color: "grey"}}></i>
                 </button>
                 <p>
-                  Want to be more specific? Try
+                  Want to be more specific? Try &nbsp;
                   <a href={"/advancedsearch"}>Advanced Search</a>
                 </p>
               </form>

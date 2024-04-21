@@ -1,12 +1,11 @@
 "use client";
 
+import "./articles.css";
 import {useApiContext} from "@/context/ApiContext";
-import {useEffect, useState} from "react";
-import Link from "next/link";
+import {useEffect} from "react";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
-import "./articles.css";
 import Header from "@/components/Header.jsx";
 
 export default function Articles() {
@@ -43,13 +42,13 @@ export default function Articles() {
   // Article Title Template //
   const titleBodyTemplate = (articles) => {
     return (
-      <Link
+      <a
         href={`${articles.webUrl}`}
         rel="noopener noreferrer"
         target="_blank"
         className="articleTableTitle">
         <p>{articles.webTitle}</p>
-      </Link>
+      </a>
     );
   };
   // Article Image Template //
