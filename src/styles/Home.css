@@ -3,17 +3,12 @@
     justify-content: center;
     align-items: center;
     margin-top: 1%;
-
 }
 
 .logo {
     width: 15%;
     height: auto;
 }
-
-
-
-
 
 .formContainer {
     position: absolute;

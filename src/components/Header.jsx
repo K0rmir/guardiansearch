@@ -27,19 +27,22 @@ export default function Header() {
     const searchQuery = formData.get("searchQuery");
     router.push(`/articles?search=${searchQuery}`);
     setHeaderSearch(true);
+    console.log(advSearchBool);
   }
+
+  console.log(advSearchBool);
 
   return (
     <>
       <div className="header">
         <div className="headerLogo">
-          <Link href="/">
+          <a href="/">
             <img
-              src="./searchguardianlogomain.png"
+              src="./guardiansearchrectangle.JPG"
               alt=""
               className="headerLogo"
             />
-          </Link>
+          </a>
         </div>
 
         {!advSearchBool && (
@@ -60,7 +63,7 @@ export default function Header() {
                 </button>
                 <p>
                   Want to be more specific? Try
-                  <Link href={"/advancedsearch"}>Advanced Search</Link>
+                  <a href={"/advancedsearch"}>Advanced Search</a>
                 </p>
               </form>
             </div>

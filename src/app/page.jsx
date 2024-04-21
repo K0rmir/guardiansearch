@@ -1,10 +1,10 @@
 "use client";
 
 import {InputText} from "primereact/inputtext";
-import "../styles/Home.css";
 import "primeicons/primeicons.css";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import "../styles/Home.css";
 
 export default function Home() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function Home() {
             </button>
             <p>
               Want to be more specific? Try
-              <Link href={"/advancedsearch"}> Advanced Search</Link>
+              <a href={"/advancedsearch"}> Advanced Search</a>
             </p>
           </form>
         </div>

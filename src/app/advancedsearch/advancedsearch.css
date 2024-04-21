@@ -18,14 +18,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* height: 50px; */
-    /* width: fit-content; */
 }
 
-/* .inputSwitch {
-    margin: 0;
-    padding: 10px;
-} */
 
 .p-card-content {
     padding: 0;
@@ -36,15 +30,15 @@
 }
 
 
-
-
 .searchBtn {
-    grid-column: 1 / span 2;
+
     padding: 10px;
-    align-self: center;
-    justify-self: center;
+    /* align-self: center; */
+    /* justify-self: center; */
     display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: #052962;
 }
 
 .categoryOptions {

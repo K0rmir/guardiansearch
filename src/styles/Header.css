@@ -1,13 +1,18 @@
 .header {
     display: flex;
     justify-content: center;
+    /* background-color: bisque; */
+    width: 100%;
+    height: 75px;
 }
 
 .headerLogo {
     position: absolute;
     left: 1%;
-    width: 25%;
+    width: 30%;
     height: auto;
+    margin: 3px 0px;
+    padding: 0px;
 }
 
 .formContainerHeader {

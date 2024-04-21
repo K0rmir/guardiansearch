@@ -1,6 +1,5 @@
 "use client";
 
-import "./advancedsearch.css";
 import {InputText} from "primereact/inputtext";
 import {InputNumber} from "primereact/inputnumber";
 import {InputSwitch} from "primereact/inputswitch";
@@ -14,11 +13,12 @@ import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState, useEffect} from "react";
 import Header from "@/components/Header.jsx";
+import "./advancedsearch.css";
 
 export default function AdvancedSearch() {
   const router = useRouter();
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const {
     apiCallAdvancedSearch,

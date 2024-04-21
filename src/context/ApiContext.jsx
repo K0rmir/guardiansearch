@@ -19,7 +19,7 @@ export default function ApiProvider({children}) {
   // Content API endpoint - This search is generic & returns pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
     const data = await fetch(
-      `https://content.guardianapis.com/search?q=${query}&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
+      `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
     );
     const res = await data.json();
     const articleData = res.response.results;
