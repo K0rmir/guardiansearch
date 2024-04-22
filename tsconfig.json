@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/Home.jsx",
+    "src/app/components/Home.jsx",
     "src/app/layout.jsx",
     "src/context/ApiContext.jsx",
     "src/app/page.jsx"

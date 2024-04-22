@@ -1,5 +1,7 @@
 "use client";
 
+import Header from "@/app/components/Header.jsx";
+import "./advancedsearch.css";
 import {InputText} from "primereact/inputtext";
 import {InputNumber} from "primereact/inputnumber";
 import {InputSwitch} from "primereact/inputswitch";
@@ -12,8 +14,6 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState} from "react";
-import Header from "@/components/Header.jsx";
-import "./advancedsearch.css";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -81,7 +81,23 @@ export default function AdvancedSearch() {
   const categoryBodyTemplate = (articles) => {
     return <p>{articles.sectionName}</p>;
   };
-  // Category template for options in category dropdown //
+
+  const bookmarkArticleBodyTemplate = (articles) => {
+    return (
+      <Button
+        icon="pi pi-bookmark"
+        rounded
+        text
+        severity="secondary"
+        aria-label="Bookmark"
+        onClick={() => {
+          console.log("Article Bookmarked!");
+        }}
+      />
+    );
+  };
+
+  // Category template for options in category dropdown in advsearch form //
   const selectedCategoryTemplate = (option, props) => {
     if (option) {
       return (
@@ -92,7 +108,7 @@ export default function AdvancedSearch() {
     }
     return <span>{props.placeholder}</span>;
   };
-  // Category option template for options in category dropdown //
+  // Category option template for options in category dropdown in advsearch form //
   const categoryOptionTemplate = (option) => {
     return (
       <div>
@@ -182,6 +198,9 @@ export default function AdvancedSearch() {
                 body={publishedBodyTemplate}
                 className="column"
                 style={{width: "15%"}}></Column>
+              <Column
+                header="Bookmark"
+                body={bookmarkArticleBodyTemplate}></Column>
             </DataTable>
           </Card>
         </div>

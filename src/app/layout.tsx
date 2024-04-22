@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api'; 
 import ApiProvider from "@/context/ApiContext"
-import Footer from "@/components/Footer.jsx";
+import Footer from "@/app/components/Footer.jsx";
 // import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
 import 'primereact/resources/themes/lara-light-blue/theme.css'
 

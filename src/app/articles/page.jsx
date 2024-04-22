@@ -6,7 +6,9 @@ import {useEffect} from "react";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
-import Header from "@/components/Header.jsx";
+import Header from "@/app/components/Header.jsx";
+import {Button} from "primereact/button";
+import {saveArticle} from "../../lib/actions";
 
 export default function Articles() {
   const {
@@ -70,6 +72,25 @@ export default function Articles() {
     return <p>{articles.sectionName}</p>;
   };
 
+  // onClick function to bookmark article and insert into savedArticles table //
+  // May need useeffect here to dynamically update articles being saved/unsaved on page without refresh //
+  // Within useffect (triggered each time button is clicked) conditional to query DB for isBookedmarked value //
+  // Depending on value, render two different buttons, each which functions to add/remove from saved //
+  const bookmarkArticleBodyTemplate = (articles) => {
+    return (
+      <Button
+        icon="pi pi-bookmark"
+        rounded
+        text
+        severity="secondary"
+        aria-label="Bookmark"
+        onClick={() => {
+          console.log(saveArticle);
+        }}
+      />
+    );
+  };
+
   return (
     <div>
       <Header />
@@ -104,6 +125,9 @@ export default function Articles() {
               body={publishedBodyTemplate}
               className="column"
               style={{width: "15%"}}></Column>
+            <Column
+              header="Bookmark"
+              body={bookmarkArticleBodyTemplate}></Column>
           </DataTable>
         </Card>
       </div>
