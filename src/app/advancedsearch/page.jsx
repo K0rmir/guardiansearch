@@ -14,6 +14,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState} from "react";
+import {saveArticle} from "../../lib/actions";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -91,7 +92,7 @@ export default function AdvancedSearch() {
         severity="secondary"
         aria-label="Bookmark"
         onClick={() => {
-          console.log("Article Bookmarked!");
+          saveArticle(articles);
         }}
       />
     );

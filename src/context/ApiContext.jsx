@@ -1,6 +1,7 @@
 "use client";
 
 import {createContext, useState, useContext, useEffect} from "react";
+import {isArticleSavedCheck} from "../lib/actions";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -19,11 +20,13 @@ export default function ApiProvider({children}) {
   // Generic Search. Returns 30 pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
     const data = await fetch(
-      `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
+      `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&api-key=${api_key}` // &show-fields=body
     );
     const res = await data.json();
     const articleData = res.response.results;
-    isArticleBookmarkedCheck(articleData);
+    isArticleSavedCheck(articleData);
+    await setArticles(articleData);
+    console.log(articleData);
   }
 
   // Advanced Search //
@@ -53,23 +56,12 @@ export default function ApiProvider({children}) {
     );
     const res = await data.json();
     const articleData = res.response.results;
-    isArticleBookmarkedCheck(articleData);
+    isArticleSavedCheck(articleData);
   }
 
-  // iterate through each article returned from api call and add new 'isSaved' property to each article object. //
-  //  Need to query DB and compare all articles in bookmarkedArticles table against the articles fetched in articleData variable //
-  // To see if they are bookmarked. This will compare the article ID's and isBookmarked value then update new article property 'isSaved' accordingly //
-  // Once all done, then update state. setArticles(articleData). //
-  async function isArticleBookmarkedCheck(articleData) {
-    for (const article of articleData) {
-      article.isSaved = true;
-    }
-
-    // database query here //
-
-    setArticles(articleData);
-    console.log(articleData);
-  }
+  // function updateArticles(articleData) {
+  //   setArticles(articleData);
+  // }
 
   // call sections api endpoint on component mount with useeffect to populate categories input in adv search form //
   // had to use useffect to allow categories array to be populated for use in adv search form. //

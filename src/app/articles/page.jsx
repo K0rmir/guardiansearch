@@ -85,7 +85,7 @@ export default function Articles() {
         severity="secondary"
         aria-label="Bookmark"
         onClick={() => {
-          console.log(saveArticle);
+          saveArticle(articles);
         }}
       />
     );
