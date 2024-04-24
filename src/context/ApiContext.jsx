@@ -1,7 +1,7 @@
 "use client";
 
 import {createContext, useState, useContext, useEffect} from "react";
-import {isArticleSavedCheck} from "../lib/actions";
+import {checkSavedArticles} from "../lib/actions";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -24,9 +24,10 @@ export default function ApiProvider({children}) {
     );
     const res = await data.json();
     const articleData = res.response.results;
-    isArticleSavedCheck(articleData);
-    await setArticles(articleData);
-    console.log(articleData);
+
+    const updatedArticleData = await checkSavedArticles(articleData);
+
+    setArticles(updatedArticleData);
   }
 
   // Advanced Search //
@@ -56,12 +57,11 @@ export default function ApiProvider({children}) {
     );
     const res = await data.json();
     const articleData = res.response.results;
-    isArticleSavedCheck(articleData);
-  }
 
-  // function updateArticles(articleData) {
-  //   setArticles(articleData);
-  // }
+    const updatedArticleData = await checkSavedArticles(articleData);
+
+    setArticles(updatedArticleData);
+  }
 
   // call sections api endpoint on component mount with useeffect to populate categories input in adv search form //
   // had to use useffect to allow categories array to be populated for use in adv search form. //

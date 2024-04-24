@@ -1,8 +1,6 @@
 "use server";
 
-import {db} from "@/lib/db";
-
-// import {updateArticles} from "@/context/ApiContext";
+import {db} from "./db";
 
 // Insert article data into database to save it //
 export async function saveArticle(articles) {
@@ -33,32 +31,27 @@ export async function saveArticle(articles) {
   console.log("Article saved successfully!");
 }
 
-// iterate through each article returned from api call and add new 'isSaved' property to each article object. //
-//  Need to query DB and compare all articles in bookmarkedArticles table against the articles fetched in articleData variable //
-// To see if they are bookmarked. This will compare the article ID's and isBookmarked value then update new article property 'isSaved' accordingly //
-// Once all done, then update state. setArticles(articleData). //
-export async function isArticleSavedCheck(articleData) {
+// Function to check whether or not articles returned from API are saved in database. //
+// Call DB to fetch all saved articles //
+// Create new array (updatedArticleData) with the .map method. This iterates through each article element in the articleData array //
+// Finds articles from both sources which have matching IDs, then returns a new article object with the spread operator. (This is a copy of article elements from API array) //
+// Then adds the isSaved property to that new object and sets the value to true or false if it is saved or not. //
+
+export async function checkSavedArticles(articleData) {
   const savedArticles = await db.query(
     `SELECT article_id, is_saved FROM savedarticles`
   );
 
-  console.table(savedArticles.rows);
+  const updatedArticleData = articleData.map((article) => {
+    const savedArticle = savedArticles.rows.find(
+      (saved) => saved.article_id === article.id
+    );
 
-  for (const savedArticle of savedArticles.rows) {
-    for (const article of articleData) {
-      if (article.id === savedArticle.article_id) {
-        article.isSaved = savedArticle.is_saved;
-        console.log("Article ID match found!");
-      } else {
-        console.log("No Article ID Match found...");
-      }
-    }
-  }
+    return {
+      ...article,
+      isSaved: savedArticle ? savedArticle.is_saved : false,
+    };
+  });
 
-  // console.log(articleData);
-  // updateArticles(articleData);
+  return updatedArticleData;
 }
-
-// export async function passArticleData(articleData) {
-//   set
-// }
