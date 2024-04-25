@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
+import Image from "next/image";
 
 export default function Header() {
   const router = useRouter();
@@ -33,9 +34,9 @@ export default function Header() {
       <div className="header">
         <div className="headerLogo">
           <a href="/">
-            <img
+            <Image
               src="./guardiansearchrectangle.JPG"
-              alt=""
+              alt="temp"
               className="headerLogo"
             />
           </a>

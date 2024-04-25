@@ -87,7 +87,7 @@ export default function AdvancedSearch() {
     return <p>{articles.sectionName}</p>;
   };
 
-  const bookmarkArticleBodyTemplate = (articles) => {
+  const usebookmarkArticleBodyTemplate = (articles) => {
     const [isClicked, setIsClicked] = useState(articles.isSaved);
     return articles.isSaved ? (
       <Button
@@ -100,7 +100,7 @@ export default function AdvancedSearch() {
           articles.isSaved = false;
           setIsClicked(articles.isSaved);
           handleRemoveArticle(articles);
-          bookmarkArticleBodyTemplate;
+          usebookmarkArticleBodyTemplate;
         }}
       />
     ) : (
@@ -114,7 +114,7 @@ export default function AdvancedSearch() {
           articles.isSaved = true;
           setIsClicked(articles.isSaved);
           handleSaveArticle(articles);
-          bookmarkArticleBodyTemplate;
+          usebookmarkArticleBodyTemplate;
         }}
       />
     );
@@ -223,7 +223,7 @@ export default function AdvancedSearch() {
                 style={{width: "15%"}}></Column>
               <Column
                 header="Bookmark"
-                body={bookmarkArticleBodyTemplate}></Column>
+                body={usebookmarkArticleBodyTemplate}></Column>
             </DataTable>
           </Card>
         </div>
