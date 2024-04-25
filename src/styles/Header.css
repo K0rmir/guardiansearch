@@ -69,3 +69,8 @@
     cursor: pointer;
     background-color: transparent;
 }
+
+.savedArticlesLink {
+    position: absolute;
+    right: 1%;
+}
