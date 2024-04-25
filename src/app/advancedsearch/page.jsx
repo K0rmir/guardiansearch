@@ -14,7 +14,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState} from "react";
-import {removeArticle, saveArticle} from "../../lib/actions";
+import {handleRemoveArticle, handleSaveArticle} from "../../lib/actions";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -84,34 +84,36 @@ export default function AdvancedSearch() {
   };
 
   const bookmarkArticleBodyTemplate = (articles) => {
-    if (!articles.isSaved) {
-      return (
-        <Button
-          icon="pi pi-bookmark"
-          rounded
-          text
-          severity="secondary"
-          aria-label="Bookmark"
-          onClick={() => {
-            saveArticle(articles);
-          }}
-        />
-      );
-    } else {
-      if (articles.isSaved) {
-        return (
-          <Button
-            icon="pi pi-bookmark"
-            rounded
-            severity="secondary"
-            aria-label="Bookmark"
-            onClick={() => {
-              removeArticle(articles);
-            }}
-          />
-        );
-      }
-    }
+    const [isClicked, setIsClicked] = useState(articles.isSaved);
+    return articles.isSaved ? (
+      <Button
+        icon="pi pi-bookmark-fill"
+        rounded
+        text
+        severity="secondary"
+        aria-label="Bookmark"
+        onClick={() => {
+          articles.isSaved = false;
+          setIsClicked(articles.isSaved);
+          handleRemoveArticle(articles);
+          bookmarkArticleBodyTemplate;
+        }}
+      />
+    ) : (
+      <Button
+        icon="pi pi-bookmark"
+        rounded
+        text
+        severity="secondary"
+        aria-label="Bookmark"
+        onClick={() => {
+          articles.isSaved = true;
+          setIsClicked(articles.isSaved);
+          handleSaveArticle(articles);
+          bookmarkArticleBodyTemplate;
+        }}
+      />
+    );
   };
 
   // Category template for options in category dropdown in advsearch form //

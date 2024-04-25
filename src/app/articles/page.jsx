@@ -72,16 +72,13 @@ export default function Articles() {
     return <p>{articles.sectionName}</p>;
   };
 
-  // onClick function to bookmark article and insert into savedArticles table //
-  // May need useeffect here to dynamically update articles being saved/unsaved on page without refresh //
-  // Within useffect (triggered each time button is clicked) conditional to query DB for isBookedmarked value //
-  // Depending on value, render two different buttons, each which functions to add/remove from saved //
   const bookmarkArticleBodyTemplate = (articles) => {
     const [isClicked, setIsClicked] = useState(articles.isSaved);
     return articles.isSaved ? (
       <Button
-        icon="pi pi-bookmark"
+        icon="pi pi-bookmark-fill"
         rounded
+        text
         severity="secondary"
         aria-label="Bookmark"
         onClick={() => {

@@ -69,6 +69,11 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      {/* Saved articles page */}
+      <div className="savedArticlesLink">
+        <a href="/savedarticles"></a>
+      </div>
     </>
   );
 }
