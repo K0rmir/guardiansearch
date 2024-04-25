@@ -9,6 +9,7 @@ import {Card} from "primereact/card";
 import Header from "@/app/components/Header.jsx";
 import {Button} from "primereact/button";
 import {handleSaveArticle, handleRemoveArticle} from "../../lib/actions";
+import Image from "next/image";
 
 export default function Articles() {
   const {
@@ -59,6 +60,9 @@ export default function Articles() {
       return (
         <Image
           src={articles.elements[0].assets[0].file}
+          width={150}
+          height={100}
+          alt="temp"
           className="articleImg"></Image>
       );
     } else return <p>No image available.</p>;

@@ -7,6 +7,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import {useState, useEffect} from "react";
+import Image from "next/image";
 
 export default function SavedArticlesPage() {
   const [savedArticles, setSavedArticles] = useState();
@@ -56,6 +57,9 @@ export default function SavedArticlesPage() {
       return (
         <Image
           src={savedArticles.article_img_url}
+          width={150}
+          height={100}
+          alt="temp"
           className="articleImg"></Image>
       );
   };

@@ -15,6 +15,7 @@ import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState} from "react";
 import {handleRemoveArticle, handleSaveArticle} from "../../lib/actions";
+import Image from "next/image";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -70,6 +71,9 @@ export default function AdvancedSearch() {
       return (
         <Image
           src={articles.elements[0].assets[0].file}
+          width={150}
+          height={100}
+          alt="temp"
           className="articleImg"></Image>
       );
     } else return <p>No image available.</p>;
