@@ -72,7 +72,7 @@ export default function Header() {
 
       {/* Saved articles page */}
       <div className="savedArticlesLink">
-        <a href="/savedarticles">Your Articles</a>
+        <a href="/savedarticles">Your Bookmarks</a>
       </div>
     </>
   );

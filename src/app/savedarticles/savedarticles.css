@@ -1,0 +1,41 @@
+.SavedArticleTableContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.SavedArticleTableCard {
+    width: 75%;
+    border-radius: 10px;
+}
+
+.SavedArticleTable {
+    width: 100%;
+}
+
+.articleImg {
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.SavedArticleTableHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+
+}
+
+.headerTitle {
+    font-weight: bold;
+    font-size: 1.75rem;
+}
+
+.SavedArticleTableTitle {
+    text-decoration: underline;
+    cursor: pointer;
+    color: black;
+}

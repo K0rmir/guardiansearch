@@ -72,7 +72,7 @@ export default function Articles() {
     return <p>{articles.sectionName}</p>;
   };
 
-  const bookmarkArticleBodyTemplate = (articles) => {
+  const useBookmarkArticleBodyTemplate = (articles) => {
     const [isClicked, setIsClicked] = useState(articles.isSaved);
     return articles.isSaved ? (
       <Button
@@ -85,7 +85,7 @@ export default function Articles() {
           articles.isSaved = false;
           setIsClicked(articles.isSaved);
           handleRemoveArticle(articles);
-          bookmarkArticleBodyTemplate;
+          useBookmarkArticleBodyTemplate;
         }}
       />
     ) : (
@@ -99,7 +99,7 @@ export default function Articles() {
           articles.isSaved = true;
           setIsClicked(articles.isSaved);
           handleSaveArticle(articles);
-          bookmarkArticleBodyTemplate;
+          useBookmarkArticleBodyTemplate;
         }}
       />
     );
@@ -141,7 +141,7 @@ export default function Articles() {
               style={{width: "15%"}}></Column>
             <Column
               header="Bookmark"
-              body={bookmarkArticleBodyTemplate}></Column>
+              body={useBookmarkArticleBodyTemplate}></Column>
           </DataTable>
         </Card>
       </div>

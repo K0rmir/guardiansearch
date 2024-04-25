@@ -13,11 +13,17 @@ export async function handleSaveArticle(articles) {
   const article_publishdate = new Date(
     articles.webPublicationDate
   ).toLocaleDateString();
+  let article_img_url;
+  if (!articles.elements) {
+    article_img_url = "No Image Available.";
+  } else {
+    article_img_url = articles.elements[0].assets[0].file;
+  }
   const is_saved = articles.isSaved;
 
   const saveNewArticle = await db.query(
-    `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved)
-    VALUES ($1, $2, $3, $4, $5, $6)`,
+    `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved, article_img_url)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     [
       article_id,
       article_title,
@@ -25,6 +31,7 @@ export async function handleSaveArticle(articles) {
       article_category,
       article_publishdate,
       is_saved,
+      article_img_url,
     ]
   );
 
@@ -64,4 +71,14 @@ export async function checkSavedArticles(articleData) {
   });
 
   return updatedArticleData;
+}
+
+// Fetch all saved article data //
+export async function fetchSavedArticles() {
+  const savedArticles = await db.query(
+    `
+    SELECT * from savedarticles`
+  );
+
+  return savedArticles.rows;
 }
