@@ -68,9 +68,9 @@ export default function AdvancedSearch() {
   const imageBodyTemplate = (articles) => {
     if (articles.elements) {
       return (
-        <img
+        <Image
           src={articles.elements[0].assets[0].file}
-          className="articleImg"></img>
+          className="articleImg"></Image>
       );
     } else return <p>No image available.</p>;
   };

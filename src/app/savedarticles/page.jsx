@@ -8,7 +8,7 @@ import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import {useState, useEffect} from "react";
 
-export default function savedArticlesPage() {
+export default function SavedArticlesPage() {
   const [savedArticles, setSavedArticles] = useState();
 
   //   Get saved articles from database on component mount //
@@ -32,7 +32,7 @@ export default function savedArticlesPage() {
   // Table Footer //
   const footer = `Returned ${
     savedArticles ? savedArticles.length : 0
-  } bookmarked articles.`;
+  } articles.`;
 
   // Article Title Template //
   const titleBodyTemplate = (savedArticles) => {
@@ -54,7 +54,9 @@ export default function savedArticlesPage() {
       return <p>No Image Available.</p>;
     } else
       return (
-        <img src={savedArticles.article_img_url} className="articleImg"></img>
+        <Image
+          src={savedArticles.article_img_url}
+          className="articleImg"></Image>
       );
   };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import {createContext, useState, useContext, useEffect} from "react";
-import {checkSavedArticles} from "../lib/actions";
+import {checkSavedArticles, saveArticle} from "../lib/actions";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //

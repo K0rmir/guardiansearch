@@ -26,10 +26,7 @@ export default function Header() {
     const searchQuery = formData.get("searchQuery");
     router.push(`/articles?search=${searchQuery}`);
     setHeaderSearch(true);
-    console.log(advSearchBool);
   }
-
-  console.log(advSearchBool);
 
   return (
     <>
