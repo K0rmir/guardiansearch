@@ -14,7 +14,7 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Dropdown} from "primereact/dropdown";
 import {useState} from "react";
-import {saveArticle} from "../../lib/actions";
+import {removeArticle, saveArticle} from "../../lib/actions";
 
 export default function AdvancedSearch() {
   const router = useRouter();
@@ -84,18 +84,34 @@ export default function AdvancedSearch() {
   };
 
   const bookmarkArticleBodyTemplate = (articles) => {
-    return (
-      <Button
-        icon="pi pi-bookmark"
-        rounded
-        text
-        severity="secondary"
-        aria-label="Bookmark"
-        onClick={() => {
-          saveArticle(articles);
-        }}
-      />
-    );
+    if (!articles.isSaved) {
+      return (
+        <Button
+          icon="pi pi-bookmark"
+          rounded
+          text
+          severity="secondary"
+          aria-label="Bookmark"
+          onClick={() => {
+            saveArticle(articles);
+          }}
+        />
+      );
+    } else {
+      if (articles.isSaved) {
+        return (
+          <Button
+            icon="pi pi-bookmark"
+            rounded
+            severity="secondary"
+            aria-label="Bookmark"
+            onClick={() => {
+              removeArticle(articles);
+            }}
+          />
+        );
+      }
+    }
   };
 
   // Category template for options in category dropdown in advsearch form //

@@ -2,13 +2,13 @@
 
 import "./articles.css";
 import {useApiContext} from "@/context/ApiContext";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import Header from "@/app/components/Header.jsx";
 import {Button} from "primereact/button";
-import {saveArticle} from "../../lib/actions";
+import {handleSaveArticle, handleRemoveArticle} from "../../lib/actions";
 
 export default function Articles() {
   const {
@@ -77,7 +77,21 @@ export default function Articles() {
   // Within useffect (triggered each time button is clicked) conditional to query DB for isBookedmarked value //
   // Depending on value, render two different buttons, each which functions to add/remove from saved //
   const bookmarkArticleBodyTemplate = (articles) => {
-    return (
+    const [isClicked, setIsClicked] = useState(articles.isSaved);
+    return articles.isSaved ? (
+      <Button
+        icon="pi pi-bookmark"
+        rounded
+        severity="secondary"
+        aria-label="Bookmark"
+        onClick={() => {
+          articles.isSaved = false;
+          setIsClicked(articles.isSaved);
+          handleRemoveArticle(articles);
+          bookmarkArticleBodyTemplate;
+        }}
+      />
+    ) : (
       <Button
         icon="pi pi-bookmark"
         rounded
@@ -85,7 +99,10 @@ export default function Articles() {
         severity="secondary"
         aria-label="Bookmark"
         onClick={() => {
-          saveArticle(articles);
+          articles.isSaved = true;
+          setIsClicked(articles.isSaved);
+          handleSaveArticle(articles);
+          bookmarkArticleBodyTemplate;
         }}
       />
     );

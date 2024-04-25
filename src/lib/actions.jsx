@@ -3,7 +3,7 @@
 import {db} from "./db";
 
 // Insert article data into database to save it //
-export async function saveArticle(articles) {
+export async function handleSaveArticle(articles) {
   // const user_id = GET THIS FROM AUTH PROVIDER //
 
   const article_id = articles.id;
@@ -13,7 +13,7 @@ export async function saveArticle(articles) {
   const article_publishdate = new Date(
     articles.webPublicationDate
   ).toLocaleDateString();
-  const is_saved = true;
+  const is_saved = articles.isSaved;
 
   const saveNewArticle = await db.query(
     `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved)
@@ -29,6 +29,16 @@ export async function saveArticle(articles) {
   );
 
   console.log("Article saved successfully!");
+}
+// Remove article from database //
+export async function handleRemoveArticle(articles) {
+  const article_id = articles.id;
+
+  await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
+    article_id,
+  ]);
+
+  console.log("Article removed successfully.");
 }
 
 // Function to check whether or not articles returned from API are saved in database. //
