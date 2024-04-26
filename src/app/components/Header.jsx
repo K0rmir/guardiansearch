@@ -57,7 +57,7 @@ export default function Header() {
                 <button type="submit" className="searchBtnHeader">
                   <i
                     className="pi pi-search"
-                    style={{fontSize: "1.5rem", color: "grey"}}></i>
+                    style={{fontSize: "1.5rem", color: "#052962"}}></i>
                 </button>
                 <p>
                   Want to be more specific? Try &nbsp;
@@ -67,11 +67,10 @@ export default function Header() {
             </div>
           </div>
         )}
-      </div>
 
-      {/* Saved articles page */}
-      <div className="savedArticlesLink">
-        <a href="/savedarticles">Your Bookmarks</a>
+        <div className="savedArticlesLink">
+          <a href="/savedarticles">Bookmarks</a>
+        </div>
       </div>
     </>
   );

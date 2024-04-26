@@ -38,7 +38,7 @@ export default function Home() {
             <button type="submit" className="searchBtn">
               <i
                 className="pi pi-search"
-                style={{fontSize: "1.5rem", color: "grey"}}></i>
+                style={{fontSize: "1.5rem", color: "#052962"}}></i>
             </button>
             <p>
               Want to be more specific? Try &nbsp;

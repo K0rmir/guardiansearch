@@ -155,15 +155,6 @@ export default function AdvancedSearch() {
                 placeholder="Keyword, term or phrase"
                 required
               />
-              <Card className="inputSwitchContainer">
-                <span>Search Article Content:</span>
-                <InputSwitch
-                  className="inputSwitch"
-                  checked={bodySearch}
-                  onChange={(e) => setBodySearch(e.value)}
-                />
-              </Card>
-
               <InputNumber
                 className="advSearchDate"
                 name="searchDateInput"
@@ -183,6 +174,14 @@ export default function AdvancedSearch() {
                 itemTemplate={categoryOptionTemplate}
                 className="categoryOptions"
               />
+              <Card className="inputSwitchContainer">
+                <span>Search Article Content:</span>
+                <InputSwitch
+                  className="inputSwitch"
+                  checked={bodySearch}
+                  onChange={(e) => setBodySearch(e.value)}
+                />
+              </Card>
 
               <Button type="submit" className="searchBtn">
                 Search

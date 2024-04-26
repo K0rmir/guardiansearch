@@ -8,6 +8,7 @@ import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import {useState, useEffect} from "react";
 import Image from "next/image";
+import {Button} from "primereact/button";
 
 export default function SavedArticlesPage() {
   const [savedArticles, setSavedArticles] = useState();
@@ -79,9 +80,43 @@ export default function SavedArticlesPage() {
   const savedArticlesActionsTemplate = (savedArticles) => {
     // Preview article //
     // Reference article //
-    // Share article //
     // Remove article from bookmarks //
-    return;
+    return (
+      <div className="articleActionBtns">
+        <Button
+          icon="pi pi-language"
+          rounded
+          text
+          severity="secondary"
+          aria-label="Bookmark"
+          tooltip="Generate article reference"
+          tooltipOptions={{position: "bottom"}}
+          disabled
+        />
+
+        <Button
+          icon="pi pi-link"
+          rounded
+          text
+          severity="secondary"
+          aria-label="Bookmark"
+          tooltip="Copy article link to clipboard"
+          tooltipOptions={{position: "bottom"}}
+          disabled
+        />
+
+        <Button
+          icon="pi pi-times-circle"
+          rounded
+          text
+          severity="secondary"
+          aria-label="Bookmark"
+          tooltip="Remove article from bookmarks"
+          tooltipOptions={{position: "bottom"}}
+          disabled
+        />
+      </div>
+    );
   };
 
   return (

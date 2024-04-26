@@ -51,7 +51,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    margin-top: 7%;
+    margin-top: 3%;
 }
 
 .articleTableCard {
@@ -99,4 +99,12 @@
 
 .categoryOptions:hover {
     border: 1px solid #052962;
+}
+
+.pi-bookmark-fill {
+    color: #052962;
+}
+
+.pi-bookmark {
+    color: #052962;
 }
