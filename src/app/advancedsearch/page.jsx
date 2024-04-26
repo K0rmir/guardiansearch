@@ -73,7 +73,7 @@ export default function AdvancedSearch() {
           src={articles.elements[0].assets[0].file}
           width={150}
           height={100}
-          alt="temp"
+          alt={articles.elements[0].assets[0].typeData.altText}
           className="articleImg"></Image>
       );
     } else return <p>No image available.</p>;

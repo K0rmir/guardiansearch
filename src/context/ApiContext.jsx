@@ -1,7 +1,7 @@
 "use client";
 
 import {createContext, useState, useContext, useEffect} from "react";
-import {checkSavedArticles, saveArticle} from "../lib/actions";
+import {checkSavedArticles} from "../lib/actions";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -19,9 +19,15 @@ export default function ApiProvider({children}) {
 
   // Generic Search. Returns 30 pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
-    const data = await fetch(
-      `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&api-key=${api_key}` // &show-fields=body
-    );
+    let data;
+    try {
+      data = await fetch(
+        `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&api-key=${api_key}` // &show-fields=body
+      );
+    } catch (err) {
+      throw err;
+    }
+
     const res = await data.json();
     const articleData = res.response.results;
 
