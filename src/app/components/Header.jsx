@@ -6,8 +6,6 @@ import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
-// import Image from "next/image";
-// import guardiansearchrectangle from "./guardiansearchrectangle.jpg";
 
 export default function Header() {
   const router = useRouter();

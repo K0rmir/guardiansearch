@@ -3,6 +3,11 @@ body {
     padding: 0;
     margin: 0;
     font-family: var(--font-family);
+    background-image: url("/unsplashbackground.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 * {
