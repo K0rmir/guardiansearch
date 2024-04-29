@@ -4,6 +4,9 @@ import "./globals.css";
 import { PrimeReactProvider } from 'primereact/api'; 
 import ApiProvider from "@/context/ApiContext"
 import Footer from "@/app/components/Footer.jsx";
+import { ClerkProvider } from '@clerk/nextjs'
+// import { auth, currentUser } from "@clerk/nextjs/server";
+
 // import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
 import 'primereact/resources/themes/lara-light-blue/theme.css'
 
@@ -20,13 +23,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const { userId } = auth();
+  // console.log(userId)
   return (
     <html lang="en">
+    <ClerkProvider>
      <ApiProvider>
         <PrimeReactProvider >   
           <body className={inter.className}>{children}<Footer/></body>
         </PrimeReactProvider>
       </ApiProvider>
+      </ClerkProvider>
     </html>
   );
 }

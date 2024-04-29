@@ -4,8 +4,6 @@ import {InputText} from "primereact/inputtext";
 import "primeicons/primeicons.css";
 import {useRouter} from "next/navigation";
 import "../styles/Home.css";
-// import Image from "next/image";
-// import searchguardianlogomain from "./searchguardianlogomain.png";
 
 export default function Home() {
   const router = useRouter();

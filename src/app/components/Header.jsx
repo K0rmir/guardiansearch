@@ -6,6 +6,8 @@ import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
+import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/nextjs";
+import {User} from "@clerk/nextjs/server";
 
 export default function Header() {
   const router = useRouter();
@@ -69,6 +71,15 @@ export default function Header() {
         <div className="savedArticlesLink">
           <a href="/savedarticles">Bookmarks</a>
         </div>
+
+        <SignedIn>
+          {/* Mount the UserButton component */}
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          {/* Signed out users get sign in button */}
+          <SignInButton />
+        </SignedOut>
       </div>
     </>
   );

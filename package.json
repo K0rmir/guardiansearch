@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.3",
     "dotenv": "^16.4.5",
     "guardian-js": "^5.0.0",
     "html-react-parser": "^5.1.10",

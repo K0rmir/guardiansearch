@@ -1,17 +1,22 @@
 "use client";
 
-import "./savedarticles.css";
+import "../savedarticles.css";
 import Header from "@/app/components/Header.jsx";
-import {fetchSavedArticles} from "../../lib/actions";
+import {fetchSavedArticles} from "../../../lib/actions";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import {useState, useEffect} from "react";
 import Image from "next/image";
 import {Button} from "primereact/button";
+import {useUser} from "@clerk/nextjs";
+import {SignIn} from "@clerk/nextjs";
 
 export default function SavedArticlesPage() {
   const [savedArticles, setSavedArticles] = useState();
+
+  const {isSignedIn} = useUser();
+  console.log(isSignedIn);
 
   //   Get saved articles from database on component mount //
   useEffect(() => {
@@ -79,8 +84,6 @@ export default function SavedArticlesPage() {
 
   const savedArticlesActionsTemplate = (savedArticles) => {
     // Preview article //
-    // Reference article //
-    // Remove article from bookmarks //
     return (
       <div className="articleActionBtns">
         <Button
@@ -123,43 +126,47 @@ export default function SavedArticlesPage() {
     <>
       <Header />
 
-      <div className="SavedArticleTableContainer">
-        <Card className="SavedArticleTableCard">
-          <DataTable
-            value={savedArticles}
-            paginator
-            rows={5}
-            rowsPerPageOptions={[5, 10, 20, 30]}
-            scrollable
-            scrollHeight="750px"
-            header={header}
-            footer={footer}
-            className="SavedArticleTable">
-            <Column
-              header="Title"
-              body={titleBodyTemplate}
-              style={{width: "45%"}}></Column>
-            <Column
-              header="Image"
-              body={imageBodyTemplate}
-              style={{width: "15%"}}></Column>
-            <Column
-              header="Category"
-              body={categoryBodyTemplate}
-              className="column"
-              style={{width: "15%"}}></Column>
-            <Column
-              header="Published"
-              body={publishedBodyTemplate}
-              className="column"
-              style={{width: "15%"}}></Column>
-            <Column
-              header="Actions"
-              body={savedArticlesActionsTemplate}
-              className="colimn"></Column>
-          </DataTable>
-        </Card>
-      </div>
+      {isSignedIn && (
+        <div className="SavedArticleTableContainer">
+          <Card className="SavedArticleTableCard">
+            <DataTable
+              value={savedArticles}
+              paginator
+              rows={5}
+              rowsPerPageOptions={[5, 10, 20, 30]}
+              scrollable
+              scrollHeight="750px"
+              header={header}
+              footer={footer}
+              className="SavedArticleTable">
+              <Column
+                header="Title"
+                body={titleBodyTemplate}
+                style={{width: "45%"}}></Column>
+              <Column
+                header="Image"
+                body={imageBodyTemplate}
+                style={{width: "15%"}}></Column>
+              <Column
+                header="Category"
+                body={categoryBodyTemplate}
+                className="column"
+                style={{width: "15%"}}></Column>
+              <Column
+                header="Published"
+                body={publishedBodyTemplate}
+                className="column"
+                style={{width: "15%"}}></Column>
+              <Column
+                header="Actions"
+                body={savedArticlesActionsTemplate}
+                className="colimn"></Column>
+            </DataTable>
+          </Card>
+        </div>
+      )}
+
+      {!isSignedIn && <SignIn />}
     </>
   );
 }

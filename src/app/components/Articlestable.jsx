@@ -7,11 +7,14 @@ import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
 import {Button} from "primereact/button";
+
 import {handleSaveArticle, handleRemoveArticle} from "../../lib/actions";
 import Image from "next/image";
+import {useUser} from "@clerk/nextjs";
 
 export default function ArticlesTable() {
   const {articles, searchQuery} = useApiContext();
+  const {isSignedIn} = useUser();
 
   // Article Table //
 
@@ -82,11 +85,15 @@ export default function ArticlesTable() {
         text
         severity="secondary"
         aria-label="Bookmark"
+        tooltip={!isSignedIn ? "Sign in to save this article" : ""}
+        tooltipOptions={{position: "bottom"}}
         onClick={() => {
-          articles.isSaved = true;
-          setIsClicked(articles.isSaved);
-          handleSaveArticle(articles);
-          useBookmarkArticleBodyTemplate;
+          if (isSignedIn) {
+            articles.isSaved = true;
+            setIsClicked(articles.isSaved);
+            handleSaveArticle(articles);
+            useBookmarkArticleBodyTemplate;
+          }
         }}
       />
     );
