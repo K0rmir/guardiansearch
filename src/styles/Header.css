@@ -71,9 +71,38 @@
     background-color: transparent;
 }
 
-.savedArticlesLink {
+.savedArticlesBtn {
     position: absolute;
     display: flex;
     right: 1%;
-    margin: 1% 0px;
+    margin: 10px 0px;
+    background-color: #041F4A;
+    border: none;
+    /* color: white; */
+}
+
+
+.signInButton {
+    height: fit-content;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    /* color: white; */
+    background-color: #041F4A;
+    cursor: pointer;
+    font-size: medium;
+    margin: 10px 0px;
+    position: absolute;
+    right: 135px;
+}
+
+.pi-bookmark {
+    color: white
+}
+
+.userControls {
+    position: absolute;
+    right: 75px;
+    margin: 17px 0px;
+
 }

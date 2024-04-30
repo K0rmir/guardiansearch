@@ -6,17 +6,22 @@ import {useRouter} from "next/navigation";
 import {InputText} from "primereact/inputtext";
 import {useApiContext} from "@/context/ApiContext";
 import {useEffect, useState} from "react";
-import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/nextjs";
-import {User} from "@clerk/nextjs/server";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import {Button} from "primereact/button";
 
 export default function Header() {
   const router = useRouter();
   const {setHeaderSearch} = useApiContext();
-
   const [advSearchBool, setAdvSearchBool] = useState();
+  const {isSignedIn} = useUser();
 
   let params;
-
   // This useeffect exists to check whether or not user is on advanced search page in order to render(or not) the search bar //
   useEffect(() => {
     params = document.location.href;
@@ -32,6 +37,7 @@ export default function Header() {
 
   return (
     <>
+      {/* Main logo */}
       <div className="header">
         <div className="headerLogo">
           <a href="/">
@@ -42,7 +48,7 @@ export default function Header() {
             />
           </a>
         </div>
-
+        {/* Only show generic search bar in header if not on advanced search page */}
         {!advSearchBool && (
           <div className="formContainerHeader">
             <div className="searchFormHeader">
@@ -68,18 +74,31 @@ export default function Header() {
           </div>
         )}
 
-        <div className="savedArticlesLink">
-          <a href="/savedarticles">Bookmarks</a>
+        <div className="userControls">
+          {/* User account controls */}
+          <SignedIn>
+            {/* Mount the UserButton component */}
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            {/* Signed out users get sign in button */}
+            <SignInButton className="signInButton" />
+          </SignedOut>
         </div>
 
-        <SignedIn>
-          {/* Mount the UserButton component */}
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          {/* Signed out users get sign in button */}
-          <SignInButton />
-        </SignedOut>
+        {/* Only display bookmarks link if user is signed in */}
+        {isSignedIn && (
+          <Button
+            className="savedArticlesBtn"
+            icon="pi pi-bookmark"
+            severity="secondary"
+            aria-label="Bookmark"
+            tooltip="Go to your Bookmarked Articles"
+            tooltipOptions={{position: "left"}}
+            onClick={() => {
+              router.push("/savedarticles");
+            }}></Button>
+        )}
       </div>
     </>
   );
