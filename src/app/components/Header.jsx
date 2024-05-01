@@ -17,6 +17,7 @@ import {Button} from "primereact/button";
 
 export default function Header() {
   const router = useRouter();
+  // const clerk_key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
   const {setHeaderSearch} = useApiContext();
   const [advSearchBool, setAdvSearchBool] = useState();
   const {isSignedIn} = useUser();
@@ -74,8 +75,8 @@ export default function Header() {
           </div>
         )}
 
+        {/* User account controls */}
         <div className="userControls">
-          {/* User account controls */}
           <SignedIn>
             {/* Mount the UserButton component */}
             <UserButton />
@@ -95,6 +96,7 @@ export default function Header() {
             aria-label="Bookmark"
             tooltip="Go to your Bookmarked Articles"
             tooltipOptions={{position: "left"}}
+            badgeClassName="articleBookmark"
             onClick={() => {
               router.push("/savedarticles");
             }}></Button>

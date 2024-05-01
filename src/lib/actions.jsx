@@ -34,18 +34,23 @@ export async function handleSaveArticle(articles) {
       article_img_url,
     ]
   );
-
-  console.log("Article saved successfully!");
 }
-// Remove article from database //
+// Remove article from database from article table. Either generic or advanced search //
 export async function handleRemoveArticle(articles) {
   const article_id = articles.id;
 
   await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
     article_id,
   ]);
+}
 
-  console.log("Article removed successfully.");
+// Remove saved article from database from bookmarks page //
+export async function handleRemoveSavedArticle(savedArticles) {
+  const article_id = savedArticles.article_id;
+
+  await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
+    article_id,
+  ]);
 }
 
 // Function to check whether or not articles returned from API are saved in database. //
@@ -72,6 +77,25 @@ export async function checkSavedArticles(articleData) {
 
   return updatedArticleData;
 }
+
+// -------------------- //
+
+export async function insertUserInSupabase(email, username = {}) {
+  const supabase = createSupabaseClient(); // Replace with your Supabase initialization
+
+  const {data, error} = await supabase
+    .from("users") // Replace with your table name
+    .insert([{email, username}]);
+
+  if (error) {
+    console.error("Error inserting user data:", error);
+    // Handle any insertion errors here (optional)
+  } else {
+    console.log("User data inserted successfully!");
+  }
+}
+
+// ---------------------------- //
 
 // Fetch all saved article data //
 export async function fetchSavedArticles() {

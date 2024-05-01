@@ -2,7 +2,10 @@
 
 import "../savedarticles.css";
 import Header from "@/app/components/Header.jsx";
-import {fetchSavedArticles} from "../../../lib/actions";
+import {
+  fetchSavedArticles,
+  handleRemoveSavedArticle,
+} from "../../../lib/actions";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
@@ -14,6 +17,7 @@ import {SignIn} from "@clerk/nextjs";
 
 export default function SavedArticlesPage() {
   const [savedArticles, setSavedArticles] = useState();
+  const [isRemoveBtnClicked, setIsRemoveBtnClicked] = useState(null);
 
   const {isSignedIn} = useUser();
   console.log(isSignedIn);
@@ -25,7 +29,7 @@ export default function SavedArticlesPage() {
       setSavedArticles(savedArticleData);
     };
     getArticles();
-  }, []);
+  }, [isRemoveBtnClicked]);
 
   // Saved Articles Table //
 
@@ -82,7 +86,7 @@ export default function SavedArticlesPage() {
     return <p>{savedArticles.article_category}</p>;
   };
 
-  const savedArticlesActionsTemplate = (savedArticles) => {
+  const useSavedArticlesActionsTemplate = (savedArticles) => {
     // Preview article //
     return (
       <div className="articleActionBtns">
@@ -103,9 +107,15 @@ export default function SavedArticlesPage() {
           text
           severity="secondary"
           aria-label="Bookmark"
-          tooltip="Copy article link to clipboard"
+          tooltip="Copy article URL to clipboard"
           tooltipOptions={{position: "bottom"}}
-          disabled
+          onClick={() => {
+            const article_url = savedArticles.article_url;
+            const copyArticleUrl = async () => {
+              await navigator.clipboard.writeText(article_url);
+            };
+            copyArticleUrl();
+          }}
         />
 
         <Button
@@ -116,7 +126,11 @@ export default function SavedArticlesPage() {
           aria-label="Bookmark"
           tooltip="Remove article from bookmarks"
           tooltipOptions={{position: "bottom"}}
-          disabled
+          onClick={() => {
+            setIsRemoveBtnClicked(!isRemoveBtnClicked);
+            handleRemoveSavedArticle(savedArticles);
+            useSavedArticlesActionsTemplate;
+          }}
         />
       </div>
     );
@@ -159,7 +173,7 @@ export default function SavedArticlesPage() {
                 style={{width: "15%"}}></Column>
               <Column
                 header="Actions"
-                body={savedArticlesActionsTemplate}
+                body={useSavedArticlesActionsTemplate}
                 className="colimn"></Column>
             </DataTable>
           </Card>
