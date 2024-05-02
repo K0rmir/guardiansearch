@@ -1,0 +1,20 @@
+.articleCitationContainer {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.citationStyle1,
+.citationStyle2,
+.citationStyle3 {
+    margin: 15px 0px;
+}
+
+.p-radiobutton {
+    margin-right: 10px;
+}
+
+.citationBody {
+    margin-right: 7%;
+    width: min-content;
+}

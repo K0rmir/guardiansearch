@@ -2,10 +2,12 @@
 
 import "../savedarticles.css";
 import Header from "@/app/components/Header.jsx";
+import ArticleCitationWindow from "@/app/components/ArticleCitationWindow.jsx";
 import {
   fetchSavedArticles,
   handleRemoveSavedArticle,
 } from "../../../lib/actions";
+import {useApiContext} from "@/context/ApiContext";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import {Card} from "primereact/card";
@@ -16,6 +18,7 @@ import {useUser} from "@clerk/nextjs";
 import {SignIn} from "@clerk/nextjs";
 
 export default function SavedArticlesPage() {
+  const {setIsCitationWindowOpen} = useApiContext();
   const [savedArticles, setSavedArticles] = useState();
   const [isRemoveBtnClicked, setIsRemoveBtnClicked] = useState(null);
 
@@ -30,6 +33,8 @@ export default function SavedArticlesPage() {
     };
     getArticles();
   }, [isRemoveBtnClicked]);
+
+  console.log(savedArticles);
 
   // Saved Articles Table //
 
@@ -96,9 +101,12 @@ export default function SavedArticlesPage() {
           text
           severity="secondary"
           aria-label="Bookmark"
-          tooltip="Generate article reference"
+          tooltip="Cite article "
           tooltipOptions={{position: "bottom"}}
-          disabled
+          onClick={() => {
+            setIsCitationWindowOpen(true);
+            // handleArticleCitation(savedArticles);
+          }}
         />
 
         <Button
@@ -179,6 +187,8 @@ export default function SavedArticlesPage() {
           </Card>
         </div>
       )}
+
+      <ArticleCitationWindow />
 
       {!isSignedIn && <SignIn />}
     </>

@@ -16,13 +16,14 @@ export default function ApiProvider({children}) {
   const [searchDate, setSearchDate] = useState("");
   const [headerSearch, setHeaderSearch] = useState(false);
   const [bodySearch, setBodySearch] = useState(false);
+  const [isCitationWindowOpen, setIsCitationWindowOpen] = useState(false); // State for citation model in savedarticles page
 
   // Generic Search. Returns 30 pieces of content in API with that keyword. //
   async function apiCallSearch(query) {
     let data;
     try {
       data = await fetch(
-        `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&api-key=${api_key}` // &show-fields=body
+        `https://content.guardianapis.com/search?q="${query}"&page-size=30&show-elements=image&show-tags=contributor&api-key=${api_key}` // &show-fields=body
       );
     } catch (err) {
       throw err;
@@ -59,7 +60,7 @@ export default function ApiProvider({children}) {
     }
 
     const data = await fetch(
-      `https://content.guardianapis.com/search?q="${formQuery}"&query-fields=${queryFields}${date}${section}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&api-key=${api_key}`
+      `https://content.guardianapis.com/search?q="${formQuery}"&query-fields=${queryFields}${date}${section}&order-by=oldest&page-size=30&show-elements=image&show-fields=body&show-tags=contributor&api-key=${api_key}`
     );
     const res = await data.json();
     const articleData = res.response.results;
@@ -110,6 +111,8 @@ export default function ApiProvider({children}) {
         bodySearch,
         setBodySearch,
         categoriesArr,
+        isCitationWindowOpen,
+        setIsCitationWindowOpen,
       }}>
       {children}
     </ApiContext.Provider>

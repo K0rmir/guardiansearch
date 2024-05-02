@@ -1,5 +1,6 @@
 "use server";
 
+import {auth} from "@clerk/nextjs/server";
 import {db} from "./db";
 
 // Insert article data into database to save it //
@@ -21,6 +22,10 @@ export async function handleSaveArticle(articles) {
   }
   const is_saved = articles.isSaved;
 
+  for (const authorData of articles.tags) {
+    await handleArticleAuthors(authorData, article_id);
+  }
+
   const saveNewArticle = await db.query(
     `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved, article_img_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
@@ -35,6 +40,20 @@ export async function handleSaveArticle(articles) {
     ]
   );
 }
+
+export async function handleArticleAuthors(authorData, article_id) {
+  const author = {
+    article_id: article_id,
+    first_name: authorData.firstName,
+    last_name: authorData.lastName,
+  };
+
+  const insertAuthor = await db.query(
+    `INSERT INTO articleauthors (article_id, first_name, last_name) VALUES ($1, $2, $3)`,
+    [author.article_id, author.first_name, author.last_name]
+  );
+}
+
 // Remove article from database from article table. Either generic or advanced search //
 export async function handleRemoveArticle(articles) {
   const article_id = articles.id;
@@ -78,6 +97,16 @@ export async function checkSavedArticles(articleData) {
   return updatedArticleData;
 }
 
+// Fetch all saved article data //
+export async function fetchSavedArticles() {
+  const savedArticles = await db.query(
+    `
+    SELECT * from savedarticles`
+  );
+
+  return savedArticles.rows;
+}
+
 // -------------------- //
 
 export async function insertUserInSupabase(email, username = {}) {
@@ -96,13 +125,3 @@ export async function insertUserInSupabase(email, username = {}) {
 }
 
 // ---------------------------- //
-
-// Fetch all saved article data //
-export async function fetchSavedArticles() {
-  const savedArticles = await db.query(
-    `
-    SELECT * from savedarticles`
-  );
-
-  return savedArticles.rows;
-}
