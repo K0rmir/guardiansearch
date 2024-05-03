@@ -22,10 +22,6 @@ export async function handleSaveArticle(articles) {
   }
   const is_saved = articles.isSaved;
 
-  for (const authorData of articles.tags) {
-    await handleArticleAuthors(authorData, article_id);
-  }
-
   const saveNewArticle = await db.query(
     `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved, article_img_url)
     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
@@ -39,26 +35,49 @@ export async function handleSaveArticle(articles) {
       article_img_url,
     ]
   );
+
+  handleArticleAuthors(articles); // Separate function for handling article authors
 }
 
-export async function handleArticleAuthors(authorData, article_id) {
-  const author = {
-    article_id: article_id,
-    first_name: authorData.firstName,
-    last_name: authorData.lastName,
-  };
+export async function handleArticleAuthors(articles) {
+  const articleAuthorNum = articles.tags.length; // find how many authors per articles
 
-  const insertAuthor = await db.query(
+  let authorInfo = {};
+  if (articleAuthorNum === 0) {
+    // if no authors attributed to article in api, set names to null and insert
+    authorInfo = {
+      article_id: articles.id,
+      first_name: "null",
+      last_name: "null",
+    };
+    insertAuthor(authorInfo);
+  } else {
+    // else if one or more, loop through tags array containing authors, set article id, names and insert
+    for (const author of articles.tags) {
+      authorInfo = {
+        article_id: articles.id,
+        first_name: author.firstName,
+        last_name: author.lastName,
+      };
+      insertAuthor(authorInfo);
+    }
+  }
+}
+
+async function insertAuthor(authorInfo) {
+  await db.query(
     `INSERT INTO articleauthors (article_id, first_name, last_name) VALUES ($1, $2, $3)`,
-    [author.article_id, author.first_name, author.last_name]
+    [authorInfo.article_id, authorInfo.first_name, authorInfo.last_name]
   );
 }
 
 // Remove article from database from article table. Either generic or advanced search //
 export async function handleRemoveArticle(articles) {
   const article_id = articles.id;
-
   await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
+    article_id,
+  ]);
+  await db.query(`DELETE from articleauthors WHERE article_id = $1`, [
     article_id,
   ]);
 }
@@ -66,8 +85,10 @@ export async function handleRemoveArticle(articles) {
 // Remove saved article from database from bookmarks page //
 export async function handleRemoveSavedArticle(savedArticles) {
   const article_id = savedArticles.article_id;
-
   await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
+    article_id,
+  ]);
+  await db.query(`DELETE from articleauthors WHERE article_id = $1`, [
     article_id,
   ]);
 }
@@ -109,19 +130,19 @@ export async function fetchSavedArticles() {
 
 // -------------------- //
 
-export async function insertUserInSupabase(email, username = {}) {
-  const supabase = createSupabaseClient(); // Replace with your Supabase initialization
+// export async function insertUserInSupabase(email, username = {}) {
+//   const supabase = createSupabaseClient(); // Replace with your Supabase initialization
 
-  const {data, error} = await supabase
-    .from("users") // Replace with your table name
-    .insert([{email, username}]);
+//   const {data, error} = await supabase
+//     .from("users") // Replace with your table name
+//     .insert([{email, username}]);
 
-  if (error) {
-    console.error("Error inserting user data:", error);
-    // Handle any insertion errors here (optional)
-  } else {
-    console.log("User data inserted successfully!");
-  }
-}
+//   if (error) {
+//     console.error("Error inserting user data:", error);
+//     // Handle any insertion errors here (optional)
+//   } else {
+//     console.log("User data inserted successfully!");
+//   }
+// }
 
 // ---------------------------- //
