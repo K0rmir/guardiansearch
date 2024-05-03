@@ -128,6 +128,14 @@ export async function fetchSavedArticles() {
   return savedArticles.rows;
 }
 
+export async function fetchUniqueArticleData(uniqueArticleId) {
+  const uniqueArticleData = await db.query(
+    `SELECT * FROM savedarticles WHERE article_id = $1`,
+    [uniqueArticleId]
+  );
+  return uniqueArticleData.rows[0];
+}
+
 // -------------------- //
 
 // export async function insertUserInSupabase(email, username = {}) {

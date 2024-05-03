@@ -21,9 +21,10 @@ export default function SavedArticlesPage() {
   const {setIsCitationWindowOpen} = useApiContext();
   const [savedArticles, setSavedArticles] = useState();
   const [isRemoveBtnClicked, setIsRemoveBtnClicked] = useState(null);
+  const [uniqueArticleId, setUniqueArticleId] = useState(""); // unique article id held in state for citation operations
 
   const {isSignedIn} = useUser();
-  console.log(isSignedIn);
+  // console.log(isSignedIn);
 
   //   Get saved articles from database on component mount //
   useEffect(() => {
@@ -33,8 +34,6 @@ export default function SavedArticlesPage() {
     };
     getArticles();
   }, [isRemoveBtnClicked]);
-
-  console.log(savedArticles);
 
   // Saved Articles Table //
 
@@ -104,8 +103,9 @@ export default function SavedArticlesPage() {
           tooltip="Cite article "
           tooltipOptions={{position: "bottom"}}
           onClick={() => {
-            setIsCitationWindowOpen(true);
-            // handleArticleCitation(savedArticles);
+            const id = savedArticles.article_id; // get the id of the article we're clicking
+            setUniqueArticleId(id); // set it as state. This is passed as a prop to citation window child component down below vv
+            setIsCitationWindowOpen(true); // open citation window modal
           }}
         />
 
@@ -147,7 +147,6 @@ export default function SavedArticlesPage() {
   return (
     <>
       <Header />
-
       {isSignedIn && (
         <div className="SavedArticleTableContainer">
           <Card className="SavedArticleTableCard">
@@ -187,9 +186,8 @@ export default function SavedArticlesPage() {
           </Card>
         </div>
       )}
-
-      <ArticleCitationWindow />
-
+      <ArticleCitationWindow uniqueArticleId={uniqueArticleId} />{" "}
+      {/* pass unique article if from state as prop to child component */}
       {!isSignedIn && <SignIn />}
     </>
   );

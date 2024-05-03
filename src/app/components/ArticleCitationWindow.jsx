@@ -3,15 +3,63 @@
 import {useApiContext} from "@/context/ApiContext";
 import {Dialog} from "primereact/dialog";
 import {RadioButton} from "primereact/radiobutton";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Divider} from "primereact/divider";
 import {Card} from "primereact/card";
 import "../../styles/Articlecitationwindow.css";
+import {fetchUniqueArticleData} from "../../lib/actions";
 
-export default function ArticleCitationWindow() {
-  const {isCitationWindowOpen, setIsCitationWindowOpen, savedArticles} =
-    useApiContext();
+export default function ArticleCitationWindow({uniqueArticleId}) {
+  // recieve unique article id from parent component
+  const {isCitationWindowOpen, setIsCitationWindowOpen} = useApiContext();
   const [citationStyle, setCitationStyle] = useState();
+  const [uniqueArticle, setUniqueArticle] = useState();
+  const [formattedDate, setFormattedDate] = useState();
+
+  const newDate = new Date();
+  const day = newDate.getDate();
+  const month = newDate.getMonth();
+  const year = newDate.getFullYear();
+  const dateAccessed = `${day}/${month}/${year}`;
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return "";
+    }
+    const parts = dateString.split("/");
+    const day = parts[1];
+    const month = parseInt(parts[0], 10) - 1;
+    return `${day} ${months[month]}`;
+  };
+
+  useEffect(() => {
+    // this useffect is triggered when uniqueArticleId changes. On trigger, call database for unique article data with unique id
+    const getUniqueArticleData = async () => {
+      const uniqueArticleData = await fetchUniqueArticleData(uniqueArticleId);
+      setUniqueArticle(uniqueArticleData);
+
+      if (uniqueArticleData?.article_publishdate) {
+        const formattedDate = formatDate(uniqueArticleData.article_publishdate);
+        setFormattedDate(formattedDate);
+      }
+    };
+    getUniqueArticleData();
+  }, [uniqueArticleId]);
 
   return (
     <>
@@ -62,19 +110,19 @@ export default function ArticleCitationWindow() {
 
           <Divider layout="vertical" />
           <Card className="citationBody">
-            <p></p>
+            {citationStyle === "Harvard" && (
+              <div className="articleCitation">
+                Author Surname, Initial. {`(2024).`}{" "}
+                {uniqueArticle.article_title}. <i>The Guardian,</i> {"[online]"}{" "}
+                {formattedDate}. Available at: {uniqueArticle.article_url}.{" "}
+                {`(Accessed: ${dateAccessed})`}.
+              </div>
+            )}
+            {citationStyle === "APA" && <div>Style Pending...</div>}
+            {citationStyle === "MLA" && <div>Style Pending...</div>}
           </Card>
         </div>
       </Dialog>
     </>
   );
 }
-
-// Mahdawi, A. (2024). Oprah’s Ozempic brouhaha shows technology
-// advances faster than attitudes. The Guardian. [online] 2 Mar.
-// Available at:
-// https://www.theguardian.com/commentisfree/2024/mar/02/oprah-ozempic-weight-loss-drug-weightwatchers.
-// ‌
-
-// -- Harvard Referencing -- //
-// Author Surname, initial. (Year) 'Article title', Website Name(in italics), Date. (day&month) "Available at:" URL (Accessed: Day Month Year)
