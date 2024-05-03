@@ -15,6 +15,7 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
   const [citationStyle, setCitationStyle] = useState();
   const [uniqueArticle, setUniqueArticle] = useState();
   const [formattedDate, setFormattedDate] = useState();
+  const [articlePublishYear, setArticlePublishYear] = useState();
 
   const newDate = new Date();
   const day = newDate.getDate();
@@ -42,9 +43,20 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
       return "";
     }
     const parts = dateString.split("/");
+    console.log(parts);
     const day = parts[1];
     const month = parseInt(parts[0], 10) - 1;
     return `${day} ${months[month]}`;
+  };
+
+  const formatYear = (dateString) => {
+    if (!dateString) {
+      return "";
+    }
+    const parts = dateString.split("/");
+    console.log(parts);
+    const year = parts[2];
+    return `${year}`;
   };
 
   useEffect(() => {
@@ -57,6 +69,8 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
         const formattedDate = formatDate(uniqueArticleData.article_publishdate);
         setFormattedDate(formattedDate);
       }
+      const formattedYear = formatYear(uniqueArticleData.article_publishdate);
+      setArticlePublishYear(formattedYear);
     };
     getUniqueArticleData();
   }, [uniqueArticleId]);
@@ -112,7 +126,7 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
           <Card className="citationBody">
             {citationStyle === "Harvard" && (
               <div className="articleCitation">
-                Author Surname, Initial. {`(2024).`}{" "}
+                Author Surname, Initial. {`(${articlePublishYear}).`}{" "}
                 {uniqueArticle.article_title}. <i>The Guardian,</i> {"[online]"}{" "}
                 {formattedDate}. Available at: {uniqueArticle.article_url}.{" "}
                 {`(Accessed: ${dateAccessed})`}.

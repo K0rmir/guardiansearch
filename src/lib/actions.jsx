@@ -15,7 +15,7 @@ export async function handleSaveArticle(articles) {
     articles.webPublicationDate
   ).toLocaleDateString();
   let article_img_url;
-  if (!articles.elements) {
+  if (articles.elements.length < 1) {
     article_img_url = "No Image Available.";
   } else {
     article_img_url = articles.elements[0].assets[0].file;

@@ -42,7 +42,7 @@ export default function ArticlesTable() {
   };
   // Article Image Template //
   const imageBodyTemplate = (articles) => {
-    if (articles.elements) {
+    if (articles.elements.length > 0) {
       return (
         <Image
           src={articles.elements[0].assets[0].file}
