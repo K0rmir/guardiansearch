@@ -128,11 +128,22 @@ export async function fetchSavedArticles() {
   return savedArticles.rows;
 }
 
+// add aliases to columns names where column names are duplicated across tables (article_id) to avoid ambiguous error.
+// aliases are sa (savedarticles) & aa (articleauthors). aa first & last name is joined to sa.
+// query was initially returning 3 separate objects for each author in an article.
+// Solved this by using json_agg & json_build_object to create array of objects each with first and last name properties.
+// Use 'group by' to ensure those columns are included in the single object
+
 export async function fetchUniqueArticleData(uniqueArticleId) {
   const uniqueArticleData = await db.query(
-    `SELECT * FROM savedarticles WHERE article_id = $1`,
+    `SELECT sa.*, json_agg(json_build_object('first_name', aa.first_name, 'last_name', aa.last_name)) AS authors
+    FROM savedarticles sa
+    INNER JOIN articleauthors aa ON sa.article_id = aa.article_id
+    WHERE sa.article_id = $1
+    GROUP BY sa.id, sa.user_id, sa.article_id, sa.article_title, sa.article_url, sa.article_category, sa.article_publishdate, sa.is_saved, sa.article_img_url`,
     [uniqueArticleId]
   );
+
   return uniqueArticleData.rows[0];
 }
 

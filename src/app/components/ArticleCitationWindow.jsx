@@ -43,7 +43,6 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
       return "";
     }
     const parts = dateString.split("/");
-    console.log(parts);
     const day = parts[1];
     const month = parseInt(parts[0], 10) - 1;
     return `${day} ${months[month]}`;
@@ -54,26 +53,37 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
       return "";
     }
     const parts = dateString.split("/");
-    console.log(parts);
     const year = parts[2];
     return `${year}`;
   };
+
+  let individualAuthor;
+  let authorFirstNameInitial;
 
   useEffect(() => {
     // this useffect is triggered when uniqueArticleId changes. On trigger, call database for unique article data with unique id
     const getUniqueArticleData = async () => {
       const uniqueArticleData = await fetchUniqueArticleData(uniqueArticleId);
       setUniqueArticle(uniqueArticleData);
+      console.log(uniqueArticleData);
 
-      if (uniqueArticleData?.article_publishdate) {
+      if (uniqueArticleData) {
         const formattedDate = formatDate(uniqueArticleData.article_publishdate);
+        const formattedYear = formatYear(uniqueArticleData.article_publishdate);
         setFormattedDate(formattedDate);
+        setArticlePublishYear(formattedYear);
       }
-      const formattedYear = formatYear(uniqueArticleData.article_publishdate);
-      setArticlePublishYear(formattedYear);
     };
     getUniqueArticleData();
+    handleArticleAuthorNames(uniqueArticle);
   }, [uniqueArticleId]);
+
+  function handleArticleAuthorNames(uniqueArticleData) {
+    if (uniqueArticle.authors.length === 1) {
+      authorFirstNameInitial = uniqueArticleData.authors.first_name.charAt(0);
+      individualAuthor = `${uniqueArticleData.authors.last_name}, ${authorFirstNameInitial}`;
+    }
+  }
 
   return (
     <>
@@ -126,10 +136,10 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
           <Card className="citationBody">
             {citationStyle === "Harvard" && (
               <div className="articleCitation">
-                Author Surname, Initial. {`(${articlePublishYear}).`}{" "}
-                {uniqueArticle.article_title}. <i>The Guardian,</i> {"[online]"}{" "}
-                {formattedDate}. Available at: {uniqueArticle.article_url}.{" "}
-                {`(Accessed: ${dateAccessed})`}.
+                {uniqueArticle.authors === 1 && {individualAuthor}} Initial.{" "}
+                {`(${articlePublishYear}).`} {uniqueArticle.article_title}.{" "}
+                <i>The Guardian,</i> {"[online]"} {formattedDate}. Available at:{" "}
+                {uniqueArticle.article_url}. {`(Accessed: ${dateAccessed})`}.
               </div>
             )}
             {citationStyle === "APA" && <div>Style Pending...</div>}
