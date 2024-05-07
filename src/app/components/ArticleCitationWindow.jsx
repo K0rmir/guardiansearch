@@ -8,6 +8,7 @@ import {Divider} from "primereact/divider";
 import {Card} from "primereact/card";
 import "../../styles/Articlecitationwindow.css";
 import {fetchUniqueArticleData} from "../../lib/actions";
+import {auth} from "@clerk/nextjs/server";
 
 export default function ArticleCitationWindow({uniqueArticleId}) {
   // recieve unique article id from parent component
@@ -57,8 +58,7 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
     return `${year}`;
   };
 
-  let individualAuthor;
-  let authorFirstNameInitial;
+  let authorNames = "";
 
   useEffect(() => {
     // this useffect is triggered when uniqueArticleId changes. On trigger, call database for unique article data with unique id
@@ -75,15 +75,27 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
       }
     };
     getUniqueArticleData();
-    handleArticleAuthorNames(uniqueArticle);
   }, [uniqueArticleId]);
 
-  function handleArticleAuthorNames(uniqueArticleData) {
-    if (uniqueArticle.authors.length === 1) {
-      authorFirstNameInitial = uniqueArticleData.authors.first_name.charAt(0);
-      individualAuthor = `${uniqueArticleData.authors.last_name}, ${authorFirstNameInitial}`;
+  // Control flow for sorting names of authors //
+  if (uniqueArticle?.authors.length <= 3) {
+    // loop through each element of the authors array in the uniqueArticle object and get the last name and first name initial,
+    // add them to the authorNames string variable using addition assignment operator & template literals //
+    for (const author of uniqueArticle.authors) {
+      const authorLastName = author.last_name;
+      const authorFirstNameInitial = author.first_name.charAt(0);
+      authorNames += `${authorLastName}, ${authorFirstNameInitial}., `;
     }
+    authorNames = authorNames.slice(0, -2);
+  } else if (uniqueArticle?.authors.length >= 4) {
+    authorNames = `${
+      uniqueArticle.authors[0].last_name
+    }, ${uniqueArticle.authors[0].first_name.charAt(0)}. et al.`;
   }
+
+  let article_citation_1 = `${authorNames} (${articlePublishYear}). '${uniqueArticle.article_title}',`;
+  let article_citation_2 = `${formattedDate}. Available at: ${uniqueArticle.article_url}.
+  (Accessed: ${dateAccessed}).`;
 
   return (
     <>
@@ -136,10 +148,7 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
           <Card className="citationBody">
             {citationStyle === "Harvard" && (
               <div className="articleCitation">
-                {uniqueArticle.authors === 1 && {individualAuthor}} Initial.{" "}
-                {`(${articlePublishYear}).`} {uniqueArticle.article_title}.{" "}
-                <i>The Guardian,</i> {"[online]"} {formattedDate}. Available at:{" "}
-                {uniqueArticle.article_url}. {`(Accessed: ${dateAccessed})`}.
+                {article_citation_1} <i>The Guardian,</i> {article_citation_2}
               </div>
             )}
             {citationStyle === "APA" && <div>Style Pending...</div>}
