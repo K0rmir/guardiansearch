@@ -58,14 +58,11 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
     return `${year}`;
   };
 
-  let authorNames = "";
-
   useEffect(() => {
     // this useffect is triggered when uniqueArticleId changes. On trigger, call database for unique article data with unique id
     const getUniqueArticleData = async () => {
       const uniqueArticleData = await fetchUniqueArticleData(uniqueArticleId);
       setUniqueArticle(uniqueArticleData);
-      console.log(uniqueArticleData);
 
       if (uniqueArticleData) {
         const formattedDate = formatDate(uniqueArticleData.article_publishdate);
@@ -74,28 +71,81 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
         setArticlePublishYear(formattedYear);
       }
     };
+
     getUniqueArticleData();
   }, [uniqueArticleId]);
 
-  // Control flow for sorting names of authors //
-  if (uniqueArticle?.authors.length <= 3) {
-    // loop through each element of the authors array in the uniqueArticle object and get the last name and first name initial,
-    // add them to the authorNames string variable using addition assignment operator & template literals //
-    for (const author of uniqueArticle.authors) {
-      const authorLastName = author.last_name;
-      const authorFirstNameInitial = author.first_name.charAt(0);
-      authorNames += `${authorLastName}, ${authorFirstNameInitial}., `;
-    }
-    authorNames = authorNames.slice(0, -2);
-  } else if (uniqueArticle?.authors.length >= 4) {
-    authorNames = `${
-      uniqueArticle.authors[0].last_name
-    }, ${uniqueArticle.authors[0].first_name.charAt(0)}. et al.`;
-  }
+  // control flow for sorting author names and citations //
+  let authorNames = "";
+  let completeHarvardCitation;
+  let completeApaCitation;
+  let completeMlaCitation;
 
-  let article_citation_1 = `${authorNames} (${articlePublishYear}). '${uniqueArticle.article_title}',`;
-  let article_citation_2 = `${formattedDate}. Available at: ${uniqueArticle.article_url}.
-  (Accessed: ${dateAccessed}).`;
+  // -- Harvard Citation -- //
+  if (citationStyle === "Harvard") {
+    if (uniqueArticle?.authors.length <= 3) {
+      // loop through each element of the authors array in the uniqueArticle object and get the last name and first name initial,
+      // add them to the authorNames string variable using addition assignment operator & template literals //
+      for (const author of uniqueArticle.authors) {
+        const authorLastName = author.last_name;
+        const authorFirstNameInitial = author.first_name.charAt(0);
+        authorNames += `${authorLastName}, ${authorFirstNameInitial}., `;
+      }
+      authorNames = authorNames.slice(0, -2);
+    } else if (uniqueArticle?.authors.length >= 4) {
+      authorNames = `${
+        uniqueArticle.authors[0].last_name
+      }, ${uniqueArticle.authors[0].first_name.charAt(0)}. et al.`;
+    }
+    // Harvard citation strings //
+    let harvardCitation1 = `${authorNames} (${articlePublishYear}). '${uniqueArticle.article_title}',`;
+    let harvardCitation2 = `${formattedDate}. Available at: ${uniqueArticle.article_url}.
+      (Accessed: ${dateAccessed}).`;
+
+    completeHarvardCitation = [harvardCitation1, harvardCitation2];
+
+    // -- APA Citation -- //
+  } else if (citationStyle === "APA") {
+    if (uniqueArticle?.authors.length === 1) {
+      authorNames = `${
+        uniqueArticle.authors[0].last_name
+      }, ${uniqueArticle.authors[0].first_name.charAt(0)}.`;
+    } else if (uniqueArticle?.authors.length === 2) {
+      for (const author of uniqueArticle.authors) {
+        const authorLastName = author.last_name;
+        const authorFirstNameInitial = author.first_name.charAt(0);
+        authorNames += `${authorLastName}, ${authorFirstNameInitial}. & `;
+      }
+    } else if (uniqueArticle?.authors.length >= 3) {
+      authorNames = `${
+        uniqueArticle.authors[0].last_name
+      }, ${uniqueArticle.authors[0].first_name.charAt(0)}. et al.`;
+    }
+    // APA Citation Strings //
+    let apaCitation1 = `${authorNames} (${articlePublishYear}, ${formattedDate}). ${uniqueArticle.article_title}.`;
+    let apaCitation2 = `${uniqueArticle.article_url}`;
+
+    completeApaCitation = [apaCitation1, apaCitation2];
+
+    // -- MLA Citation -- //
+  } else if (citationStyle === "MLA") {
+    if (uniqueArticle?.authors.length === 1) {
+      authorNames = `${uniqueArticle.authors[0].last_name}, ${uniqueArticle.authors[0].first_name}.`;
+    } else if (uniqueArticle?.authors.length === 2) {
+      for (const author of uniqueArticle.authors) {
+        const authorLastName = author.last_name;
+        const authorFirstName = author.first_name;
+        authorNames += `${authorLastName}, ${authorFirstName}, and `;
+      }
+    } else if (uniqueArticle?.authors.length >= 3) {
+      authorNames = `${uniqueArticle.authors[0].last_name}, ${uniqueArticle.authors[0].first_name}, et al.`;
+    }
+
+    let mlaCitation1 = `${authorNames} "${uniqueArticle.article_title}."`;
+    let mlaCitation2 = `${formattedDate}. ${articlePublishYear}, ${uniqueArticle.article_url}`;
+
+    completeMlaCitation = [mlaCitation1, mlaCitation2];
+  }
 
   return (
     <>
@@ -148,11 +198,23 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
           <Card className="citationBody">
             {citationStyle === "Harvard" && (
               <div className="articleCitation">
-                {article_citation_1} <i>The Guardian,</i> {article_citation_2}
+                {completeHarvardCitation[0]} <i>The Guardian,</i>{" "}
+                {completeHarvardCitation[1]}
               </div>
             )}
-            {citationStyle === "APA" && <div>Style Pending...</div>}
-            {citationStyle === "MLA" && <div>Style Pending...</div>}
+            {citationStyle === "APA" && (
+              <div className="articleCitation">
+                {completeApaCitation[0]} <i>The Guardian,</i>{" "}
+                {completeApaCitation[1]}
+              </div>
+            )}
+
+            {citationStyle === "MLA" && (
+              <div className="articleCitation">
+                {completeMlaCitation[0]} <i>The Guardian,</i>{" "}
+                {completeMlaCitation[1]}
+              </div>
+            )}
           </Card>
         </div>
       </Dialog>
