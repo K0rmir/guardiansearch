@@ -1,3 +1,5 @@
+"use server"
+
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
     handleInsertNewUser(id)
   }
 
-  async function handleInsertNewUser(id: string | undefined) {
+  function handleInsertNewUser(id: string | undefined) {
     console.log("Insert into DB function!")
     db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
   }
