@@ -59,13 +59,20 @@ export async function POST(req: Request) {
   if (eventType === 'user.created') {
     console.log("New User Created!")
     console.log('userId:', id)
-    handleInsertNewUser(id)
+
+    try {
+      await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  async function handleInsertNewUser(id: string | undefined) {
-    console.log("Insert into DB function!")
-    await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
-  }
+  // handleInsertNewUser(id)
+
+  // async function handleInsertNewUser(id: string | undefined) {
+  //   console.log("Insert into DB function!")
+  //   await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
+  // }
 
 
 
