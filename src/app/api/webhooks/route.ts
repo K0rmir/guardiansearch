@@ -62,9 +62,9 @@ export async function POST(req: Request) {
     handleInsertNewUser(id)
   }
 
-  function handleInsertNewUser(id: string | undefined) {
+  async function handleInsertNewUser(id: string | undefined) {
     console.log("Insert into DB function!")
-    db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
+    await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
   }
 
 
