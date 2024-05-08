@@ -140,7 +140,7 @@ export default function ArticleCitationWindow({uniqueArticleId}) {
     } else if (uniqueArticle?.authors.length >= 3) {
       authorNames = `${uniqueArticle.authors[0].last_name}, ${uniqueArticle.authors[0].first_name}, et al.`;
     }
-
+    // MLA Citation String //
     let mlaCitation1 = `${authorNames} "${uniqueArticle.article_title}."`;
     let mlaCitation2 = `${formattedDate}. ${articlePublishYear}, ${uniqueArticle.article_url}`;
 

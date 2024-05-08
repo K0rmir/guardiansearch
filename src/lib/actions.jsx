@@ -1,6 +1,5 @@
 "use server";
 
-import {auth} from "@clerk/nextjs/server";
 import {db} from "./db";
 
 // Insert article data into database to save it //
@@ -146,22 +145,3 @@ export async function fetchUniqueArticleData(uniqueArticleId) {
 
   return uniqueArticleData.rows[0];
 }
-
-// -------------------- //
-
-// export async function insertUserInSupabase(email, username = {}) {
-//   const supabase = createSupabaseClient(); // Replace with your Supabase initialization
-
-//   const {data, error} = await supabase
-//     .from("users") // Replace with your table name
-//     .insert([{email, username}]);
-
-//   if (error) {
-//     console.error("Error inserting user data:", error);
-//     // Handle any insertion errors here (optional)
-//   } else {
-//     console.log("User data inserted successfully!");
-//   }
-// }
-
-// ---------------------------- //

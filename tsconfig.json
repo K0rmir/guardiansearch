@@ -36,7 +36,8 @@
     "src/app/components/Home.jsx",
     "src/app/layout.jsx",
     "src/context/ApiContext.jsx",
-    "src/app/page.jsx"
+    "src/app/page.jsx",
+    "src/app/api/webhooks/route.ts"
   ],
   "exclude": [
     "node_modules"

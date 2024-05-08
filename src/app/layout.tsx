@@ -31,7 +31,7 @@ export default function RootLayout({
           <body className={inter.className}>{children}<Footer/></body>
         </PrimeReactProvider>
       </ApiProvider>
-      </ClerkProvider>
+    </ClerkProvider>
     </html>
   );
 }

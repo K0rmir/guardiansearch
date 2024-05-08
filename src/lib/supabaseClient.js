@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import {useAuth} from "@clerk/nextjs"; // <--
+// import {useAuth} from "@clerk/nextjs"; // <--
 // import supabase from "../lib/supabaseClient"; // <--
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
