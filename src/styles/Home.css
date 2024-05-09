@@ -70,3 +70,20 @@
     cursor: pointer;
     background-color: transparent;
 }
+
+.signInButton {
+    width: max-content;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: #041F4A;
+    cursor: pointer;
+    font-size: medium;
+    position: absolute;
+    right: 1px;
+}
+
+.userControls {
+    position: absolute;
+    right: 75px;
+}
