@@ -173,13 +173,11 @@ export async function fetchSavedArticles() {
   // Get clerkuserid
   const {userId} = auth();
   const clerkUserId = userId;
-  console.log(clerkUserId);
+
   const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
     clerkUserId,
   ]);
   const user_id = usersRes.rows[0].id;
-
-  console.log(user_id);
 
   const savedArticles = await db.query(
     `

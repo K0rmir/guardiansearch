@@ -5,7 +5,6 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { db } from "../../../lib/db";
 
-
 export async function POST(req: Request) {
 
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -51,14 +50,11 @@ export async function POST(req: Request) {
     })
   }
 
-  // Do something with the payload
-  // For this guide, you simply log the payload to the console
   const { id } = evt.data;
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    console.log("New User Created!")
-    console.log('userId:', id)
+
 
     try {
       await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
@@ -66,16 +62,6 @@ export async function POST(req: Request) {
       console.error(err)
     }
   }
-
-  if (eventType === 'session.created') {
-    try {
-      console.log('New Session Created!')
-      console.log('userId:', id)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
 
   return new Response('', { status: 200 })
 }

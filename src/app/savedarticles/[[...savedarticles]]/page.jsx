@@ -24,7 +24,6 @@ export default function SavedArticlesPage() {
   const [uniqueArticleId, setUniqueArticleId] = useState(""); // unique article id held in state for citation operations
 
   const {isSignedIn} = useUser();
-  // console.log(isSignedIn);
 
   //   Get saved articles from database on component mount //
   useEffect(() => {
