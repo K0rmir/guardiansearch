@@ -1,10 +1,18 @@
 "use server";
 
 import {db} from "./db";
+import {auth} from "@clerk/nextjs/server";
 
 // Insert article data into database to save it //
 export async function handleSaveArticle(articles) {
-  // const user_id = GET THIS FROM AUTH PROVIDER //
+  // Get clerkuserid
+  const {userId} = auth();
+  const clerkUserId = userId;
+  // Get user_Id from database where it matches clerkuserid
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
 
   const article_id = articles.id;
   const article_title = articles.webTitle;
@@ -22,9 +30,10 @@ export async function handleSaveArticle(articles) {
   const is_saved = articles.isSaved;
 
   const saveNewArticle = await db.query(
-    `INSERT INTO savedarticles (article_id, article_title, article_url, article_category, article_publishdate, is_saved, article_img_url)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    `INSERT INTO savedarticles (user_id, article_id, article_title, article_url, article_category, article_publishdate, is_saved, article_img_url)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
     [
+      user_id,
       article_id,
       article_title,
       article_url,
@@ -64,32 +73,65 @@ export async function handleArticleAuthors(articles) {
 }
 
 async function insertAuthor(authorInfo) {
+  const {userId} = auth();
+  const clerkUserId = userId;
+  // Get user_Id from database where it matches clerkuserid
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
+
   await db.query(
-    `INSERT INTO articleauthors (article_id, first_name, last_name) VALUES ($1, $2, $3)`,
-    [authorInfo.article_id, authorInfo.first_name, authorInfo.last_name]
+    `INSERT INTO articleauthors (article_id, first_name, last_name, user_id) VALUES ($1, $2, $3, $4)`,
+    [
+      authorInfo.article_id,
+      authorInfo.first_name,
+      authorInfo.last_name,
+      user_id,
+    ]
   );
 }
 
 // Remove article from database from article table. Either generic or advanced search //
 export async function handleRemoveArticle(articles) {
+  const {userId} = auth();
+  const clerkUserId = userId;
+  // Get user_Id from database where it matches clerkuserid
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
+
   const article_id = articles.id;
-  await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
-    article_id,
-  ]);
-  await db.query(`DELETE from articleauthors WHERE article_id = $1`, [
-    article_id,
-  ]);
+  await db.query(
+    `DELETE FROM savedarticles WHERE (article_id = $1) AND (user_id = $2)`,
+    [article_id, user_id]
+  );
+  await db.query(
+    `DELETE from articleauthors WHERE (article_id = $1) AND (user_id = $2)`,
+    [article_id, user_id]
+  );
 }
 
 // Remove saved article from database from bookmarks page //
 export async function handleRemoveSavedArticle(savedArticles) {
+  const {userId} = auth();
+  const clerkUserId = userId;
+  // Get user_Id from database where it matches clerkuserid
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
   const article_id = savedArticles.article_id;
-  await db.query(`DELETE FROM savedarticles WHERE article_id = $1`, [
-    article_id,
-  ]);
-  await db.query(`DELETE from articleauthors WHERE article_id = $1`, [
-    article_id,
-  ]);
+
+  await db.query(
+    `DELETE FROM savedarticles WHERE (article_id = $1) AND (user_id = $2)`,
+    [article_id, user_id]
+  );
+  await db.query(
+    `DELETE from articleauthors WHERE (article_id = $1) AND (user_id = $2)`,
+    [article_id, user_id]
+  );
 }
 
 // Function to check whether or not articles returned from API are saved in database. //
@@ -99,8 +141,18 @@ export async function handleRemoveSavedArticle(savedArticles) {
 // Then adds the isSaved property to that new object and sets the value to true or false if it is saved or not. //
 
 export async function checkSavedArticles(articleData) {
+  // Get clerkuserid
+  const {userId} = auth();
+  const clerkUserId = userId;
+
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
+
   const savedArticles = await db.query(
-    `SELECT article_id, is_saved FROM savedarticles`
+    `SELECT article_id, is_saved FROM savedarticles WHERE user_id = $1`,
+    [user_id]
   );
 
   const updatedArticleData = articleData.map((article) => {
@@ -113,15 +165,26 @@ export async function checkSavedArticles(articleData) {
       isSaved: savedArticle ? savedArticle.is_saved : false,
     };
   });
-
   return updatedArticleData;
 }
 
 // Fetch all saved article data //
 export async function fetchSavedArticles() {
+  // Get clerkuserid
+  const {userId} = auth();
+  const clerkUserId = userId;
+  console.log(clerkUserId);
+  const usersRes = await db.query(`SELECT * from users WHERE user_id = $1`, [
+    clerkUserId,
+  ]);
+  const user_id = usersRes.rows[0].id;
+
+  console.log(user_id);
+
   const savedArticles = await db.query(
     `
-    SELECT * from savedarticles`
+    SELECT * from savedarticles WHERE user_id = $1`,
+    [user_id]
   );
 
   return savedArticles.rows;

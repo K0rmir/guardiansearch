@@ -67,13 +67,14 @@ export async function POST(req: Request) {
     }
   }
 
-  // handleInsertNewUser(id)
-
-  // async function handleInsertNewUser(id: string | undefined) {
-  //   console.log("Insert into DB function!")
-  //   await db.query(`INSERT into users (user_id) VALUES ($1)`, [id])
-  // }
-
+  if (eventType === 'session.created') {
+    try {
+      console.log('New Session Created!')
+      console.log('userId:', id)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
 
   return new Response('', { status: 200 })

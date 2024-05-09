@@ -2,6 +2,7 @@
 
 import {createContext, useState, useContext, useEffect} from "react";
 import {checkSavedArticles} from "../lib/actions";
+import {useUser} from "@clerk/nextjs";
 
 // Get api key from environment variables. //
 // API Key is needed in every request. //
@@ -9,6 +10,7 @@ import {checkSavedArticles} from "../lib/actions";
 const ApiContext = createContext();
 
 export default function ApiProvider({children}) {
+  const {isSignedIn} = useUser();
   const api_key = process.env.NEXT_PUBLIC_API_KEY;
 
   const [articles, setArticles] = useState([]);
@@ -32,9 +34,12 @@ export default function ApiProvider({children}) {
     const res = await data.json();
     const articleData = res.response.results;
 
-    const updatedArticleData = await checkSavedArticles(articleData);
-
-    setArticles(updatedArticleData);
+    if (isSignedIn) {
+      const updatedArticleData = await checkSavedArticles(articleData);
+      setArticles(updatedArticleData);
+    } else {
+      setArticles(articleData);
+    }
   }
 
   // Advanced Search //
@@ -65,9 +70,12 @@ export default function ApiProvider({children}) {
     const res = await data.json();
     const articleData = res.response.results;
 
-    const updatedArticleData = await checkSavedArticles(articleData);
-
-    setArticles(updatedArticleData);
+    if (isSignedIn) {
+      const updatedArticleData = await checkSavedArticles(articleData);
+      setArticles(updatedArticleData);
+    } else {
+      setArticles(articleData);
+    }
   }
 
   // call sections api endpoint on component mount with useeffect to populate categories input in adv search form //
