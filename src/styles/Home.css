@@ -87,3 +87,7 @@
     position: absolute;
     right: 75px;
 }
+
+.advSearchText a {
+    color: black
+}

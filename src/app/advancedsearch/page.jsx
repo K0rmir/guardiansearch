@@ -74,12 +74,12 @@ export default function AdvancedSearch() {
                 placeholder="Keyword, term or phrase"
                 required
               />
-              <InputNumber
+              <InputText
                 className="advSearchDate"
+                type="text"
                 name="searchDateInput"
                 id="searchDateInput"
                 placeholder="Year"
-                useGrouping={false}
               />
 
               <Dropdown

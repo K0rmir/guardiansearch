@@ -56,9 +56,11 @@ export default function Home() {
                   className="pi pi-search"
                   style={{fontSize: "1.5rem", color: "#052962"}}></i>
               </button>
-              <p>
-                Want to be more specific? Try &nbsp;
-                <a href={"/advancedsearch"}> Advanced Search</a>
+              <p className="advSearchText">
+                <strong>
+                  Want to be more specific? Try &nbsp;
+                  <a href={"/advancedsearch"}> Advanced Search</a>
+                </strong>
               </p>
             </form>
           </div>
