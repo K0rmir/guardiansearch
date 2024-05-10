@@ -11,9 +11,11 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+import {Button} from "primereact/button";
 
 export default function Home() {
   const router = useRouter();
+  const {isSignedIn} = useUser();
 
   async function handleFormSearch(formData) {
     const searchQuery = formData.get("searchQuery");
@@ -32,6 +34,19 @@ export default function Home() {
           <SignInButton className="signInButton" />
         </SignedOut>
       </div>
+      {isSignedIn && (
+        <Button
+          className="savedArticlesBtn"
+          icon="pi pi-bookmark"
+          severity="secondary"
+          aria-label="Bookmark"
+          tooltip="Go to your Bookmarked Articles"
+          tooltipOptions={{position: "left"}}
+          badgeClassName="articleBookmark"
+          onClick={() => {
+            router.push("/savedarticles");
+          }}></Button>
+      )}
       <div>
         <div className="logoContainer">
           <img

@@ -91,3 +91,16 @@
 .advSearchText a {
     color: black
 }
+
+.savedArticlesBtn {
+    position: absolute;
+    display: flex;
+    right: 1%;
+    margin: 0px 0px;
+    background-color: #041F4A;
+    border: none;
+}
+
+.savedArticlesBtn .pi-bookmark {
+    color: white;
+}
