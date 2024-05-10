@@ -18,8 +18,8 @@ export default function Articles() {
   useEffect(() => {
     const params = new URLSearchParams(document.location.search);
     const query = params.get("search");
-    setSearchQuery(query);
     apiCallSearch(query);
+    setSearchQuery(query);
     setHeaderSearch(false);
   }, [searchQuery, headerSearch]);
 
@@ -29,11 +29,4 @@ export default function Articles() {
       <Articlestable />
     </div>
   );
-}
-
-{
-  /* <p
-dangerouslySetInnerHTML={{
-  __html: htmlContent.slice(0, 500) + "...",
-}}></p> */
 }
