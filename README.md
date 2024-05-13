@@ -10,7 +10,8 @@
 Enter your desired keyword or phrase into the search box and either click the magnifiying glass or hit your enter key to search.
   You will be redirected to the articles results page where you wil see articles relevant to your search.
   
-![Guardian Search Basic Search](https://imgur.com/a/cXqneKP)
+![GS basic](https://github.com/K0rmir/guardiansearch/assets/145403611/8fcc2c02-0edb-4d4f-8009-cfadc439d950)
+
 
 - #### Advanced
 
@@ -22,8 +23,7 @@ Advanced search gives you the option to refine your search. In the search bar at
   - Search Article Content - If desired, toggle to return articles which *contain* your keyword or phrase in the body of the article content. This field is NOT required. NOTE: By default, this option is toggled off; both basic and advanced search will always return results where the search term or phrase is contained within the headline of the article unless this is toggled.
 
 
-![Guardian Search Advanced Search](https://imgur.com/v78ssvT)
- 
+![GS Adv](https://github.com/K0rmir/guardiansearch/assets/145403611/a27cab77-2feb-41cc-8213-bc05cd0bf701) 
 
 ## Bookmarks 
 
@@ -40,8 +40,9 @@ NOTE: In order to bookmark articles, access bookmarked articles and use bookmark
    - Copy Article URL to Clipboard - Selecting this option will copy the URL of the article straight to your clipboard for easy article sharing.
    - Remove Article - Selecting this action will delete the article from your bookmarks.
 
-![Guardian Search Bookmark Actions](https://imgur.com/Tf2CK0U)
-  
+
+  ![Capture](https://github.com/K0rmir/guardiansearch/assets/145403611/191f07fc-813a-4da4-bb8c-81cca7b5d8db)
+
 
 
 
